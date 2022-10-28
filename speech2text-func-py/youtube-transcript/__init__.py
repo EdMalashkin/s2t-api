@@ -1,7 +1,12 @@
 import json
 import logging
+import string
 import azure.functions as func
 from youtube_transcript_api import YouTubeTranscriptApi
+
+def get_transcript(id, lang) -> string:
+        transcript = YouTubeTranscriptApi.get_transcript(id, languages=[lang])
+        return json.dumps(transcript, ensure_ascii=False)
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -19,8 +24,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     if id:
         if not lang:
             lang = 'en'
-        transcript = YouTubeTranscriptApi.get_transcript(id, languages=[lang])
-        result = json.dumps(transcript, ensure_ascii=False).encode('utf8')
+        result = get_transcript(id, lang).encode('utf8')
         func.HttpResponse.mimetype = 'application/json'
         func.HttpResponse.charset = 'utf-8'
         return func.HttpResponse(result)
