@@ -7,6 +7,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     id = req.params.get('id')
+    lang = req.params.get('lang')
     if not id:
         try:
             req_body = req.get_json()
@@ -16,7 +17,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             id = req_body.get('id')
 
     if id:
-        transcript = YouTubeTranscriptApi.get_transcript(id, languages=['uk', 'en'])
+        if not lang:
+            lang = 'en'
+        transcript = YouTubeTranscriptApi.get_transcript(id, languages=[lang])
         result = json.dumps(transcript, ensure_ascii=False).encode('utf8')
         func.HttpResponse.mimetype = 'application/json'
         func.HttpResponse.charset = 'utf-8'
