@@ -1,4 +1,4 @@
-namespace speech2text.api
+namespace Speech2Text.Api
 {
     public class WeatherForecast
     {

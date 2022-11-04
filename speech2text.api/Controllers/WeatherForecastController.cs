@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace speech2text.api.Controllers
+namespace Speech2Text.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
