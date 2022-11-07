@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speech2Text.Api", "speech2text.api\Speech2Text.Api.csproj", "{4D3EC791-3D09-4422-894B-374BC9FBD246}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "speech2text.api", "speech2text.api\speech2text.api.csproj", "{4D3EC791-3D09-4422-894B-374BC9FBD246}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
