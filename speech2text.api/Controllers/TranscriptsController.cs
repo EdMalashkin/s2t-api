@@ -36,7 +36,7 @@ namespace Speech2Text.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] Transcript transcriptTask)
         {
-            transcriptTask.id = Guid.NewGuid().ToString();
+            transcriptTask.Id = Guid.NewGuid().ToString();
             await _cosmosDbService.AddAsync(transcriptTask);
             return Ok(transcriptTask);
         }
@@ -46,7 +46,7 @@ namespace Speech2Text.Api.Controllers
         [HttpPut("{id}")]
         public async void Put(string id, [FromBody] Transcript value)
         {
-            value.id = id; // to be sure
+            value.Id = id; // to be sure
             await _cosmosDbService.UpdateAsync(id, value);
         }
 

@@ -17,7 +17,7 @@ namespace speech2text.api.Services
 
         public async Task AddAsync(Transcript item)
         {
-            await _container.CreateItemAsync(item, new PartitionKey(item.id));
+            await _container.CreateItemAsync(item, new PartitionKey(item.Id));
         }
 
         public async Task DeleteAsync(string id)
