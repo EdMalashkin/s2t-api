@@ -2,7 +2,7 @@
 {
     public class Transcript
     {
-        public int ID { get; set; }
+        public string id { get; set; } = string.Empty;
         public string OriginalURL { get; set; } = string.Empty;
         public string Language { get; set; } = string.Empty;
     }

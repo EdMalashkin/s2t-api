@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos;
+using speech2text.api.Services;
 using Speech2Text.Api.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,37 +11,50 @@ namespace Speech2Text.Api.Controllers
     [ApiController]
     public class TranscriptsController : ControllerBase
     {
+        private readonly ICosmosDbService<Transcript> _cosmosDbService;
+
+        public TranscriptsController(ICosmosDbService<Transcript> cosmosDbService)
+        {
+            _cosmosDbService = cosmosDbService ?? throw new ArgumentNullException(nameof(cosmosDbService));
+        }
+
         // GET: api/<TranscriptsController>
         [HttpGet]
-        public IEnumerable<Transcript> Get()
+        public async Task<IEnumerable<Transcript>> Get()
         {
-            return new List<Transcript>();
+            return await _cosmosDbService.GetMultipleAsync("select * from c");
         }
 
         // GET api/<TranscriptsController>/5
         [HttpGet("{id}")]
-        public Transcript Get(int id)
+        public async Task<Transcript> Get(string id)
         {
-            return new Transcript();
+            return await _cosmosDbService.GetAsync(id);
         }
 
         // POST api/<TranscriptsController>
         [HttpPost]
-        public IActionResult Post([FromBody] Transcript value)
+        public async Task<IActionResult> PostAsync([FromBody] Transcript transcriptTask)
         {
-            return Accepted(new Transcript());
+            transcriptTask.id = Guid.NewGuid().ToString();
+            await _cosmosDbService.AddAsync(transcriptTask);
+            return Ok(transcriptTask);
         }
+
 
         // PUT api/<TranscriptsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Transcript value)
+        public async void Put(string id, [FromBody] Transcript value)
         {
+            value.id = id; // to be sure
+            await _cosmosDbService.UpdateAsync(id, value);
         }
 
         // DELETE api/<TranscriptsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async void Delete(string id)
         {
+            await _cosmosDbService.DeleteAsync(id);
         }
     }
 }
