@@ -1,7 +1,7 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Speech2Text.Api.Models;
 
-namespace speech2text.api.Services
+namespace Speech2Text.Api.Services
 {
     public class CosmosDbService : ICosmosDbService<Transcript>
     {

@@ -1,4 +1,4 @@
-﻿namespace speech2text.api.Services
+﻿namespace Speech2Text.Api.Services
 {
     public interface ICosmosDbService<T>
     {

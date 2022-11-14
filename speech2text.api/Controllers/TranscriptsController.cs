@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos;
-using speech2text.api.Services;
+using Speech2Text.Api.Services;
 using Speech2Text.Api.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
