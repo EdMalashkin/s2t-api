@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "appInsights1": {
+      "type": "appInsights.sdk"
+    },
+    "storage1": {
+      "type": "storage.emulator",
+      "connectionId": "AzureWebJobsStorage"
+    },
+    "secrets1": {
+      "secretStore": null,
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/Speech2Text-Vault",
+      "type": "secrets.keyVault",
+      "connectionId": "VaultUri"
+    },
+    "cosmosdb1": {
+      "secretStore": "AzureKeyVault",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.DocumentDB/databaseAccounts/speech2text-cosmosdb",
+      "type": "cosmosdb.azure",
+      "connectionId": "CosmosDBSettings",
+      "dynamicId": null
+    }
+  }
+}
