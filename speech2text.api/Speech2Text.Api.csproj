@@ -4,6 +4,15 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>1f2314d5-77e9-474b-87e0-719450b511c0</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.31.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Speech2Text.Core\Speech2Text.Core.csproj" />
+  </ItemGroup>
 
 </Project>
