@@ -37,23 +37,25 @@ namespace Speech2Text.Api.Controllers
         {
             transcriptTask.Id = Guid.NewGuid().ToString();
             await _cosmosDbService.AddAsync(transcriptTask);
-            return Ok(transcriptTask);
+            return StatusCode(StatusCodes.Status201Created, transcriptTask);
         }
 
 
         // PUT <TranscriptsController>/5
         [HttpPut("{id}")]
-        public async void Put(string id, [FromBody] Transcript value)
+        public async Task<IActionResult> Put(string id, [FromBody] Transcript transcriptTask)
         {
-            value.Id = id; // to be sure
-            await _cosmosDbService.UpdateAsync(id, value);
+            transcriptTask.Id = id; // to be sure
+            await _cosmosDbService.UpdateAsync(id, transcriptTask);
+            return Ok(transcriptTask);
         }
 
         // DELETE <TranscriptsController>/5
         [HttpDelete("{id}")]
-        public async void Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             await _cosmosDbService.DeleteAsync(id);
+            return Ok();
         }
     }
 }
