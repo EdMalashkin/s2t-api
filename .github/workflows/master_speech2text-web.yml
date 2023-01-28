@@ -57,5 +57,5 @@ jobs:
       
       - name: Test deployment
         run: npm i -g -D supertest mocha chai
-      - run: npx mocha Speech2Text.Api.Test/test.js
+      - run: npx mocha  ${GITHUB_WORKSPACE}/Speech2Text.Api.Test/test.js
     
