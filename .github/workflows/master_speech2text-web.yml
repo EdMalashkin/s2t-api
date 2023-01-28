@@ -54,3 +54,8 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1FAB58FB513C479F9B3297243CC137FE }}
           package: .
+      
+      - name: Test deployment
+        run: npm i -g -D supertest mocha chai
+      - run: npx mocha Speech2Text.Api.Test/test.js
+    
