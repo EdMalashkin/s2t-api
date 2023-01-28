@@ -54,3 +54,20 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1FAB58FB513C479F9B3297243CC137FE }}
           package: .
+          
+  test:
+    runs-on: ubuntu-latest
+    needs: deploy
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+    
+    - name: Install supertest, mocha, chai
+      run: npm i -g -D supertest mocha chai mochawesome
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+    - run: npx mocha  ${{ github.workspace }}/Speech2Text.Api.Test/test.js
+
