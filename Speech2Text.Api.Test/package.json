@@ -3,5 +3,8 @@
     "chai": "^4.3.7",
     "mocha": "^10.2.0",
     "supertest": "^6.3.3"
+  },
+  "scripts": {
+    "test": "mocha **/*.test.js && mocha --reporter json > reports/test-results.json"
   }
 }
