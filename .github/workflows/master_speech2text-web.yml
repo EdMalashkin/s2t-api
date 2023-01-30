@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - speech2text-web
+name: CI/CD - speech2text-web
 
 on:
   push:
@@ -78,7 +78,7 @@ jobs:
       if: success() || failure()
       with:
         name: Test Results
-        path: ${{ github.workspace }}/reports/test-results.json
+        path: ${{ github.workspace }}/test-results.json
         reporter: 'mocha-json'
         
 
