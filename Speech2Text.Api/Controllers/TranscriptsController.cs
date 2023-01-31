@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Speech2Text.Api.Models;
 using Speech2Text.Api.Services;
+using Speech2Text.Core.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -57,6 +58,20 @@ namespace Speech2Text.Api.Controllers
             await _cosmosDbService.DeleteAsync(id);
             return Ok();
         }
-    }
+
+		// DELETE <TranscriptsController>
+		[HttpDelete]
+		public async Task<IActionResult> Delete([FromBody] Transcript templateTask)
+		{
+			var query = new TranscriptQuery(templateTask).ToString();
+			var filteredTasks = await _cosmosDbService.GetMultipleAsync(query);
+			foreach (var t in filteredTasks)
+			{
+				await _cosmosDbService.DeleteAsync(t.Id);
+			}
+			
+			return Ok();
+		}
+	}
 }
 
