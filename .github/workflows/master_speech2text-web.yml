@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v3
@@ -28,7 +28,7 @@ jobs:
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
@@ -42,7 +42,7 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .net-app
 
@@ -63,9 +63,14 @@ jobs:
         working-directory: Speech2Text.Api.Test
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Sleep for 30 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '30s'
+  
+    - uses: actions/checkout@v3
     - name: Use Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
     
     - name: Install supertest, mocha, chai
       run: npm i -g -D supertest mocha chai mochawesome
