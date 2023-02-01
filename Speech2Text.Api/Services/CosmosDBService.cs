@@ -27,15 +27,21 @@ namespace Speech2Text.Api.Services
 
         public async Task<Transcript> GetAsync(string id)
         {
-            try
-            {
-                var response = await _container.ReadItemAsync<Transcript>(id, new PartitionKey(id));
-                return response.Resource;
-            }
-            catch (CosmosException) //For handling item not found and other exceptions
-            {
-                return null;
-            }
+			Transcript result;
+			try
+			{
+				var response = await _container.ReadItemAsync<Transcript>(id, new PartitionKey(id));
+				result = response.Resource;
+			}
+			catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound) 
+			{
+				throw new KeyNotFoundException(id);
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			return result;
         }
 
         public async Task<IEnumerable<Transcript>> GetMultipleAsync(string queryString)

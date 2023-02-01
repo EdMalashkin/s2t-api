@@ -27,9 +27,22 @@ namespace Speech2Text.Api.Controllers
 
         // GET <TranscriptsController>/5
         [HttpGet("{id}")]
-        public async Task<Transcript> Get(string id)
+        public async Task<IActionResult> Get(string id)
         {
-            return await _cosmosDbService.GetAsync(id);
+			Transcript result;
+			try
+			{
+				result = await _cosmosDbService.GetAsync(id);
+				return StatusCode(StatusCodes.Status200OK, result);
+			}
+			catch (KeyNotFoundException)
+			{
+				return StatusCode(StatusCodes.Status204NoContent);
+			}
+			catch (Exception)
+			{
+				throw;
+			}
         }
 
         // POST <TranscriptsController>
