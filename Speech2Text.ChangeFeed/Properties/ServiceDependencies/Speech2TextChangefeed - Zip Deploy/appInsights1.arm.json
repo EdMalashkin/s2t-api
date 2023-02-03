@@ -4,7 +4,7 @@
   "parameters": {
     "resourceGroupName": {
       "type": "string",
-      "defaultValue": "speech2text",
+      "defaultValue": "Speech2TextChangefeedRG",
       "metadata": {
         "_parameterType": "resourceGroup",
         "description": "Name of the resource group for the resource. It is recommended to put resources under same resource group for better tracking."
@@ -36,7 +36,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('Speech2Text-Vault', subscription().subscriptionId)))]",
+      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('Speech2TextChangefeed', subscription().subscriptionId)))]",
       "resourceGroup": "[parameters('resourceGroupName')]",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -49,21 +49,12 @@
           "contentVersion": "1.0.0.0",
           "resources": [
             {
-              "name": "Speech2Text-Vault",
-              "type": "Microsoft.KeyVault/vaults",
+              "name": "Speech2TextChangefeed",
+              "type": "microsoft.insights/components",
               "location": "[parameters('resourceLocation')]",
-              "properties": {
-                "sku": {
-                  "family": "A",
-                  "name": "Standard"
-                },
-                "tenantId": "f91a9149-1ede-4669-a240-5f727506e895",
-                "accessPolicies": [],
-                "enabledForDeployment": true,
-                "enabledForDiskEncryption": true,
-                "enabledForTemplateDeployment": true
-              },
-              "apiVersion": "2016-10-01"
+              "kind": "web",
+              "properties": {},
+              "apiVersion": "2015-05-01"
             }
           ]
         }
@@ -71,6 +62,6 @@
     }
   ],
   "metadata": {
-    "_dependencyType": "secrets.keyVault"
+    "_dependencyType": "appInsights.azure"
   }
 }
