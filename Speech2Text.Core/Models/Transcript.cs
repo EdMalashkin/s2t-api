@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System.Text;
 
-namespace Speech2Text.Api.Models
+namespace Speech2Text.Core.Models
 {
     public class Transcript
     {

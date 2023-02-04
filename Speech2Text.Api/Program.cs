@@ -1,5 +1,5 @@
-using Speech2Text.Api.Models;
-using Speech2Text.Api.Services;
+using Speech2Text.Core.Models;
+using Speech2Text.Core.Services;
 
 // Get services config
 var builder = WebApplication.CreateBuilder(args);

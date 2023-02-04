@@ -1,5 +1,4 @@
-﻿using Speech2Text.Api.Models;
-using System.Text;
+﻿using System.Text;
 
 namespace Speech2Text.Core.Models
 {

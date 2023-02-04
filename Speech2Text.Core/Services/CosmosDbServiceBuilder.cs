@@ -1,6 +1,6 @@
-﻿using Speech2Text.Api.Models;
+﻿using Speech2Text.Core.Models;
 
-namespace Speech2Text.Api.Services
+namespace Speech2Text.Core.Services
 {
     public class CosmosDbServiceBuilder
     {

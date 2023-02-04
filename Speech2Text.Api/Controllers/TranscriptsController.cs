@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Speech2Text.Api.Models;
-using Speech2Text.Api.Services;
 using Speech2Text.Core.Models;
+using Speech2Text.Core.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

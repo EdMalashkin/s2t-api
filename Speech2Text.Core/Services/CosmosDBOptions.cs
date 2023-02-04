@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Speech2Text.Api.Services
+namespace Speech2Text.Core.Services
 {
     public class CosmosDBOptions
     {

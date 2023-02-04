@@ -1,6 +1,6 @@
 ﻿using Microsoft.Azure.Cosmos;
 
-namespace Speech2Text.Api.Services
+namespace Speech2Text.Core.Services
 {
     public class CosmosDbService<T> : ICosmosDbService<T>
     {
