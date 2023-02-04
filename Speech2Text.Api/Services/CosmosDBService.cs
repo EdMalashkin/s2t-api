@@ -1,9 +1,8 @@
 ﻿using Microsoft.Azure.Cosmos;
-using Speech2Text.Api.Models;
 
 namespace Speech2Text.Api.Services
 {
-    public class CosmosDbService : ICosmosDbService<Transcript>
+    public class CosmosDbService<T> : ICosmosDbService<T>
     {
         private Container _container;
 
@@ -15,22 +14,22 @@ namespace Speech2Text.Api.Services
             _container = cosmosDbClient.GetContainer(databaseName, containerName);
         }
 
-        public async Task AddAsync(Transcript item)
+        public async Task AddAsync(string id, T item)
         {
-            await _container.CreateItemAsync(item, new PartitionKey(item.Id));
+            await _container.CreateItemAsync(item, new PartitionKey(id));
         }
 
         public async Task DeleteAsync(string id)
         {
-            await _container.DeleteItemAsync<Transcript>(id, new PartitionKey(id));
+            await _container.DeleteItemAsync<T>(id, new PartitionKey(id));
         }
 
-        public async Task<Transcript> GetAsync(string id)
+        public async Task<T> GetAsync(string id)
         {
-			Transcript result;
+			T result;
 			try
 			{
-				var response = await _container.ReadItemAsync<Transcript>(id, new PartitionKey(id));
+				var response = await _container.ReadItemAsync<T>(id, new PartitionKey(id));
 				result = response.Resource;
 			}
 			catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound) 
@@ -44,11 +43,11 @@ namespace Speech2Text.Api.Services
 			return result;
         }
 
-        public async Task<IEnumerable<Transcript>> GetMultipleAsync(string queryString)
+        public async Task<IEnumerable<T>> GetMultipleAsync(string queryString)
         {
-            var query = _container.GetItemQueryIterator<Transcript>(new QueryDefinition(queryString));
+            var query = _container.GetItemQueryIterator<T>(new QueryDefinition(queryString));
 
-            var results = new List<Transcript>();
+            var results = new List<T>();
             while (query.HasMoreResults)
             {
                 var response = await query.ReadNextAsync();
@@ -58,7 +57,7 @@ namespace Speech2Text.Api.Services
             return results;
         }
 
-        public async Task UpdateAsync(string id, Transcript item)
+        public async Task UpdateAsync(string id, T item)
         {
             await _container.UpsertItemAsync(item, new PartitionKey(id));
         }

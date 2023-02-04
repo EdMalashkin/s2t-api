@@ -1,4 +1,6 @@
-﻿namespace Speech2Text.Api.Services
+﻿using Speech2Text.Api.Models;
+
+namespace Speech2Text.Api.Services
 {
     public class CosmosDbServiceBuilder
     {
@@ -8,7 +10,7 @@
             _cosmosDBOptions = new CosmosDBOptions();
             builder.Configuration.GetSection("CosmosDBSettings").Bind(_cosmosDBOptions);
         }
-        public async Task<CosmosDbService> GetCosmosDbServiceAsync()
+        public async Task<CosmosDbService<Transcript>> GetCosmosDbTaskServiceAsync()
         {
             var databaseName = _cosmosDBOptions.DatabaseName;
             var containerName = _cosmosDBOptions.ContainerName;
@@ -19,12 +21,12 @@
             var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
             await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
 
-            var cosmosDbService = new CosmosDbService(client, databaseName, containerName);
+            var cosmosDbService = new CosmosDbService<Transcript>(client, databaseName, containerName);
             return cosmosDbService;
         }
-        public CosmosDbService GetCosmosDbService()
+        public CosmosDbService<Transcript> GetCosmosDbTaskService()
         {
-            return GetCosmosDbServiceAsync().GetAwaiter().GetResult();
+            return GetCosmosDbTaskServiceAsync().GetAwaiter().GetResult();
         }
     }
 }
