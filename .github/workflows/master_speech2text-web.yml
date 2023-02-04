@@ -63,10 +63,10 @@ jobs:
         working-directory: Speech2Text.Api.Test
 
     steps:
-    - name: Sleep for 30 seconds
+    - name: Sleep for 60 seconds
       uses: jakejarvis/wait-action@master
       with:
-        time: '30s'
+        time: '60s'
   
     - uses: actions/checkout@v3
     - name: Use Node.js
