@@ -5,10 +5,9 @@ namespace Speech2Text.Api.Services
     public class CosmosDbServiceBuilder
     {
         CosmosDBOptions _cosmosDBOptions;
-        public CosmosDbServiceBuilder(WebApplicationBuilder builder)
+        public CosmosDbServiceBuilder(CosmosDBOptions cosmosDBOptions)
         {
-            _cosmosDBOptions = new CosmosDBOptions();
-            builder.Configuration.GetSection("CosmosDBSettings").Bind(_cosmosDBOptions);
+            _cosmosDBOptions = cosmosDBOptions;
         }
         public async Task<CosmosDbService<Transcript>> GetCosmosDbTaskServiceAsync()
         {
