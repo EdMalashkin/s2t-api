@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
-namespace Speech2TextChangeFeed
+namespace Speech2Text.ChangeFeed
 {
     public static class HandleNewTask
     {
@@ -21,7 +19,15 @@ namespace Speech2TextChangeFeed
             {
                 log.LogInformation("Documents modified " + input.Count);
                 log.LogInformation("First document Id " + input[0].Id);
-            }
+			}
+			foreach (var d in input)
+			{
+				var link = d.GetPropertyValue<string>("OriginalURL");
+				var lang = d.GetPropertyValue<string>("Language");
+				var y = new YoutubeTranscript(link, lang);
+				var json = y.GetJson();
+				log.LogInformation(json);
+			}
         }
     }
 }
