@@ -3,11 +3,11 @@ using Speech2Text.Core.Services;
 
 // Get services config
 var builder = WebApplication.CreateBuilder(args);
-var cosmosDBOptions = new CosmosDBOptions();
-builder.Configuration.GetSection("CosmosDBSettings").Bind(cosmosDBOptions);
+var cosmosDBSettings = new CosmosDBSettings();
+builder.Configuration.GetSection("CosmosDBSettings").Bind(cosmosDBSettings);
 
 // Add services to the container.
-var cosmosDbService = new CosmosDbServiceBuilder(cosmosDBOptions).GetCosmosDbTaskService();
+var cosmosDbService = new CosmosDbServiceBuilder<Transcript>(cosmosDBSettings).GetCosmosDbTaskService();
 builder.Services.AddSingleton<ICosmosDbService<Transcript>>(cosmosDbService);
 
 builder.Services.AddControllers();

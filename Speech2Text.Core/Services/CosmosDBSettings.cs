@@ -2,7 +2,7 @@
 
 namespace Speech2Text.Core.Services
 {
-    public class CosmosDBOptions
+    public class CosmosDBSettings
     {
         //https://intellitect.com/blog/key-vault-configuration-provider/
         public const string SectionName = "CosmosDBSettings";

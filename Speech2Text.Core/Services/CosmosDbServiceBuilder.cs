@@ -2,28 +2,36 @@
 
 namespace Speech2Text.Core.Services
 {
-    public class CosmosDbServiceBuilder
+    public class CosmosDbServiceBuilder<T>
     {
-        CosmosDBOptions _cosmosDBOptions;
-        public CosmosDbServiceBuilder(CosmosDBOptions cosmosDBOptions)
-        {
-            _cosmosDBOptions = cosmosDBOptions;
-        }
-        public async Task<CosmosDbService<Transcript>> GetCosmosDbTaskServiceAsync()
-        {
-            var databaseName = _cosmosDBOptions.DatabaseName;
-            var containerName = _cosmosDBOptions.ContainerName;
-            var account = _cosmosDBOptions.EndPoint;
-            var key = _cosmosDBOptions.EndPointKey;
+        private readonly string endPoint;
+        private readonly string endPointKey;
+        private readonly string databaseName;
+        private readonly string containerName;
 
-            var client = new Microsoft.Azure.Cosmos.CosmosClient(account, key);
+        public CosmosDbServiceBuilder(CosmosDBSettings cosmosDBOptions)
+        {
+            databaseName = cosmosDBOptions.DatabaseName;
+            containerName = cosmosDBOptions.ContainerName;
+            endPoint = cosmosDBOptions.EndPoint;
+            endPointKey = cosmosDBOptions.EndPointKey;
+        }
+        public CosmosDbServiceBuilder(string endPoint, string endPointKey, string dbName, string containerName)
+        {
+            this.endPoint = endPoint;
+            this.endPointKey = endPointKey;
+            this.databaseName = dbName;
+            this.containerName = containerName;
+        }
+        public async Task<CosmosDbService<T>> GetCosmosDbTaskServiceAsync()
+        {
+            var client = new Microsoft.Azure.Cosmos.CosmosClient(endPoint, endPointKey);
             var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
             await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
-
-            var cosmosDbService = new CosmosDbService<Transcript>(client, databaseName, containerName);
+            var cosmosDbService = new CosmosDbService<T>(client, databaseName, containerName);
             return cosmosDbService;
         }
-        public CosmosDbService<Transcript> GetCosmosDbTaskService()
+        public CosmosDbService<T> GetCosmosDbTaskService()
         {
             return GetCosmosDbTaskServiceAsync().GetAwaiter().GetResult();
         }
