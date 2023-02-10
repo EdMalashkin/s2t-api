@@ -12,9 +12,10 @@ namespace Speech2Text.Api.Controllers
     {
         private readonly ICosmosDbService<Transcript> _cosmosDbService;
 
-        public TranscriptsController(ICosmosDbService<Transcript> cosmosDbService)
+        public TranscriptsController(CosmosDbServiceBuilder<Transcript> builder)
         {
-            _cosmosDbService = cosmosDbService ?? throw new ArgumentNullException(nameof(cosmosDbService));
+            if (builder == null) throw new ArgumentNullException(nameof(builder));
+            _cosmosDbService = builder.GetCosmosDbTaskService();
         }
 
         // GET: <TranscriptsController>
