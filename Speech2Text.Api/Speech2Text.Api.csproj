@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Speech2Text.Core\Speech2Text.Core.csproj" />
+    <ProjectReference Include="..\Speech2Text.Core\Speech2Text.Core.csproj">
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>
