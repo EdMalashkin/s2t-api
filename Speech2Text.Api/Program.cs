@@ -6,9 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 var cosmosDBSettings = new CosmosDBSettings();
 builder.Configuration.GetSection("CosmosDBSettings").Bind(cosmosDBSettings);
 
-// Add services to the container.
-var cosmosDbService = new CosmosDbServiceBuilder<Transcript>(cosmosDBSettings).GetCosmosDbTaskService();
-builder.Services.AddSingleton<ICosmosDbService<Transcript>>(cosmosDbService);
+// Inject services builder
+var cosmosDbBuilder = new CosmosDbServiceBuilder<Transcript>(cosmosDBSettings);
+builder.Services.AddSingleton(cosmosDbBuilder);
 
 builder.Services.AddControllers();
 

@@ -23,7 +23,7 @@ namespace Speech2Text.Core.Services
             this.databaseName = dbName;
             this.containerName = containerName;
         }
-        public async Task<CosmosDbService<T>> GetCosmosDbTaskServiceAsync()
+        public async Task<CosmosDbService<T>> GetCosmosDbServiceAsync()
         {
             var client = new CosmosClient(endPoint, endPointKey);
             var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
@@ -31,9 +31,9 @@ namespace Speech2Text.Core.Services
             var cosmosDbService = new CosmosDbService<T>(client, databaseName, containerName);
             return cosmosDbService;
         }
-        public CosmosDbService<T> GetCosmosDbTaskService()
+        public CosmosDbService<T> GetCosmosDbService()
         {
-            return GetCosmosDbTaskServiceAsync().GetAwaiter().GetResult();
+            return GetCosmosDbServiceAsync().GetAwaiter().GetResult();
         }
     }
 }

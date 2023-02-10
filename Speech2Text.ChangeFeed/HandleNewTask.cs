@@ -32,7 +32,7 @@ namespace Speech2Text.ChangeFeed
             var cosmosDbService = new CosmosDbServiceBuilder<string>("https://speech2text-cosmosdb.documents.azure.com:443/",
                 "7egNq99fnAimJWSS2JHOVRizbzgQKglH51xJh4ZYnA62035a758XaPwyLcqZ8y29E1go8vnrvbILACDbQGOa7g==",
                 "db1",
-                "youtubeTranscripts").GetCosmosDbTaskService();
+                "youtubeTranscripts").GetCosmosDbService();
             return cosmosDbService;
         }
 

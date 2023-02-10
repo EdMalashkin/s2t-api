@@ -15,7 +15,7 @@ namespace Speech2Text.Api.Controllers
         public TranscriptsController(CosmosDbServiceBuilder<Transcript> builder)
         {
             if (builder == null) throw new ArgumentNullException(nameof(builder));
-            _cosmosDbService = builder.GetCosmosDbTaskService();
+            _cosmosDbService = builder.GetCosmosDbService();
         }
 
         // GET: <TranscriptsController>
