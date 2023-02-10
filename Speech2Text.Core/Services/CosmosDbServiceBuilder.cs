@@ -1,4 +1,4 @@
-﻿using Speech2Text.Core.Models;
+﻿using Microsoft.Azure.Cosmos;
 
 namespace Speech2Text.Core.Services
 {
@@ -25,7 +25,7 @@ namespace Speech2Text.Core.Services
         }
         public async Task<CosmosDbService<T>> GetCosmosDbTaskServiceAsync()
         {
-            var client = new Microsoft.Azure.Cosmos.CosmosClient(endPoint, endPointKey);
+            var client = new CosmosClient(endPoint, endPointKey);
             var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
             await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
             var cosmosDbService = new CosmosDbService<T>(client, databaseName, containerName);
