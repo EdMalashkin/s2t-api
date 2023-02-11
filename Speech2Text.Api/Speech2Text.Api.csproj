@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Speech2Text.Core\Speech2Text.Core.csproj">
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
 
