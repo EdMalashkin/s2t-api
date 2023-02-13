@@ -23,7 +23,7 @@ namespace Speech2Text.ChangeFeed
 			{
                 var json = GetJson(d);
                 log.LogInformation(json);
-                s.AddAsync(d.Id, json);
+                s.AddAsync(d.Id, json).GetAwaiter().GetResult();
             }
         }
 
