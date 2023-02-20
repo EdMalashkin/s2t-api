@@ -6,11 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 var cosmosDBSettings = new CosmosDBSettings();
 builder.Configuration.GetSection("CosmosDBSettings").Bind(cosmosDBSettings);
 
-// Inject services builder
-var cosmosDbBuilder = new CosmosDbServiceBuilder<Transcript>(cosmosDBSettings);
-builder.Services.AddSingleton(cosmosDbBuilder);
+builder.Services.AddSingleton(cosmosDBSettings);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(); 
 
 var app = builder.Build();
 

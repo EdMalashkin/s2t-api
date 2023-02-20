@@ -4,11 +4,11 @@ namespace Speech2Text.Core.Models
 {
 	public class TranscriptQuery
 	{
-		Transcript _transcript;
+		TranscriptTask _transcript;
 		StringBuilder _query;
 		bool isWhere = false;
 
-		public TranscriptQuery(Transcript t)
+		public TranscriptQuery(TranscriptTask t)
 		{
 			_transcript = t;
 			_query = new StringBuilder();
