@@ -1,7 +1,6 @@
 import json
 import logging
 import string
-import json
 import os.path
 import azure.functions as func
 from simplemma import text_lemmatizer
@@ -19,7 +18,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
         url = "https://youtubetranscript.azurewebsites.net/api/youtube-transcript?id={0}&lang={1}".format(id, lang)
         response = urlopen(url)
-        data_json = json.loads(response.read())
+        transcript = str(response.read())
+        data_json = json.loads(transcript)
+        logging.info(data_json)
+        return data_json
         text = " ".join([item['text'] for item in data_json])
 
         stopfilelink = os.path.join(os.path.dirname(__file__), 'stopwords_ua_list.txt') #https://github.com/skupriienko/Ukrainian-Stopwords/blob/master/stopwords_ua_list.txt
