@@ -1,15 +1,11 @@
 import json
 import logging
-import string
 import os.path
+import azure.functions as func
 from urllib import request
 from urllib.request import urlopen
-#import requests
-import azure.functions as func
-#from youtube_transcript_api import YouTubeTranscriptApi
 from simplemma import text_lemmatizer
 from collections import Counter
-# from urllib.request import urlopen
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -19,17 +15,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     if id:
         if not lang:
             lang = 'en'
-
-        #transcript = YouTubeTranscriptApi.get_transcript(id, languages=[lang])
-        # data_json = json.loads(transcript, ensure_ascii=False)
-        # url = "https://youtubetranscript.azurewebsites.net/api/youtube-transcript?id={0}&lang={1}".format(id, lang)
-        # #data_json = request.get(url).json()
-        # response = urlopen(url)
-        # transcript = str(response.read())
-        # logging.info(transcript)
-        # data_json = json.loads(transcript)
-        # # logging.info(data_json)
-        # text = " ".join([item['text'] for item in data_json])
 
         url = "https://youtubetranscript.azurewebsites.net/api/youtube-transcript?id={0}&lang=uk".format("mlvhJX5V0NM")
         response = urlopen(url)
