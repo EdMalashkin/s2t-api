@@ -35,7 +35,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         words_frequency = c.most_common()
         more_than_once = [f for f in words_frequency if f[1] > 1]
         
-        return func.HttpResponse(json.dumps(more_than_once), status_code=200)
+        func.HttpResponse.mimetype = 'application/json'
+        func.HttpResponse.charset = 'utf-8'
+        return func.HttpResponse(json.dumps(more_than_once), status_code=200, )
     else:
         return func.HttpResponse(
              "This HTTP triggered function executed successfully. Pass a youtube video id in the query string or in the request body for a transcript.",
