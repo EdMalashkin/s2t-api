@@ -16,18 +16,18 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         if not lang:
             lang = 'en'
 
-        url = "https://youtubetranscript.azurewebsites.net/api/youtube-transcript?id={0}&lang=uk".format(id)
+        url = "https://youtubetranscript.azurewebsites.net/api/youtube-transcript?id={0}&lang={1}".format(id, lang)
         response = urlopen(url)
         transcript = response.read().decode('utf-8')
         data_json = json.loads(transcript)
         text = " ".join([item['text'] for item in data_json])
 
         stopfilelink = os.path.join(os.path.dirname(__file__), 'stopwords_ua_list.txt') #https://github.com/skupriienko/Ukrainian-Stopwords/blob/master/stopwords_ua_list.txt
-        doc = open(stopfilelink, encoding ='utf-8') 
+        doc = open(stopfilelink, encoding ='utf-8')
         stopwords = doc.read()
         doc.close()
 
-        lemmatized = text_lemmatizer(text, lang='uk')
+        lemmatized = text_lemmatizer(text, lang=lang)
         lowcased = list(map(lambda x: x.lower(), lemmatized))
         cleaned = [word for word in lowcased if not word in stopwords]
 
