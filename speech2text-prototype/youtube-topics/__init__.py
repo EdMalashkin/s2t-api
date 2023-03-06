@@ -16,7 +16,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         if not lang:
             lang = 'en'
 
-        url = "https://youtubetranscript.azurewebsites.net/api/youtube-transcript?id={0}&lang=uk".format("mlvhJX5V0NM")
+        url = "https://youtubetranscript.azurewebsites.net/api/youtube-transcript?id={0}&lang=uk".format(id)
         response = urlopen(url)
         transcript = response.read().decode('utf-8')
         data_json = json.loads(transcript)
