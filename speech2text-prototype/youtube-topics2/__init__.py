@@ -5,7 +5,6 @@ import azure.functions as func
 import pymorphy2
 from urllib import request
 from urllib.request import urlopen
-from simplemma import text_lemmatizer
 from collections import Counter
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -17,32 +16,39 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         if not lang:
             lang = 'en'
         
+        # 1. Get a transcript
         url = "https://youtubetranscript.azurewebsites.net/api/youtube-transcript?id={0}&lang={1}".format(id, lang)
         response = urlopen(url)
         transcript = response.read().decode('utf-8')
         data_json = json.loads(transcript)
+        text = " ".join([item['text'] for item in data_json])
 
+        # 2. Lemmatize the transcript
+        #lemmatized = text_lemmatizer(text, lang=lang)
+        morph = pymorphy2.MorphAnalyzer(lang=lang)
+        words = text.split()
+        lemmatized = []
+        for word in words:
+            lemma = morph.parse(word)[0].normal_form
+            lemmatized.append(lemma)
+       
+        # 3. Clean the transcript
         stopfilelink = os.path.join(os.path.dirname(__file__), 'stopwords_ua_list.txt') #https://github.com/skupriienko/Ukrainian-Stopwords/blob/master/stopwords_ua_list.txt
         doc = open(stopfilelink, encoding ='utf-8')
         stopwords = doc.read()
         doc.close()
 
-        morph = pymorphy2.MorphAnalyzer(lang=lang)
+        lowcased = list(map(lambda x: x.lower(), lemmatized))
+        cleaned = [word for word in lowcased if not word in stopwords]
 
-        for item in data_json:
-            #text = item['text'].replace("'","")
-            #lemmatized = text_lemmatizer(text, lang=lang, greedy=False)
-            words = item['text'].split()
-            lemmatized = []
-            for word in words:
-                lemma = morph.parse(word)[0].normal_form
-                lemmatized.append(lemma)
-            item['lemmatized'] = " ".join([word for word in lemmatized])
-            item['clean'] = " ".join([word for word in lemmatized if not word in stopwords])
-
+        # 4. Build word usage statistics
+        c = Counter(cleaned)
+        words_frequency = c.most_common()
+        more_than_once = [f for f in words_frequency if f[1] > 1]
+        
         func.HttpResponse.mimetype = 'application/json'
         func.HttpResponse.charset = 'utf-8'
-        return func.HttpResponse(json.dumps(data_json), status_code=200, )
+        return func.HttpResponse(json.dumps(more_than_once), status_code=200, )
     else:
         return func.HttpResponse(
              "This HTTP triggered function executed successfully. Pass a youtube video id in the query string or in the request body for a transcript.",
