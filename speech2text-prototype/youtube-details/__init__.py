@@ -33,12 +33,15 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             #text = item['text'].replace("'","")
             #lemmatized = text_lemmatizer(text, lang=lang, greedy=False)
             words = item['text'].split()
+            lowered = [word.lower() for word in words]
+            cleaned = [word for word in lowered if not word in stopwords]
+            item['cleaned'] = " ".join(cleaned)
             lemmatized = []
-            for word in words:
+            for word in cleaned:
                 lemma = morph.parse(word)[0].normal_form
                 lemmatized.append(lemma)
             item['lemmatized'] = " ".join([word for word in lemmatized])
-            item['clean'] = " ".join([word for word in lemmatized if not word in stopwords])
+            #item['clean'] = " ".join([word for word in lemmatized if not word in stopwords])
 
         func.HttpResponse.mimetype = 'application/json'
         func.HttpResponse.charset = 'utf-8'
