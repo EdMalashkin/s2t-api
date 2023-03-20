@@ -10,48 +10,34 @@ namespace Speech2Text.Api.Controllers
     [ApiController]
     public class TranscriptsController : ControllerBase
     {
-		private const string containerName = "tasks";
-		private readonly ICosmosDbService<TranscriptTask> _cosmosDbService;
+        private TasksController tasks;
+        private YoutubeTranscriptsController youtubeTranscripts;
+
         public TranscriptsController(CosmosDBSettings cosmosDBSettings)
         {
-			if (cosmosDBSettings == null) throw new ArgumentNullException(nameof(cosmosDBSettings));
-			var builder = new CosmosDbServiceBuilder<TranscriptTask>(cosmosDBSettings);
-            _cosmosDbService = builder.GetCosmosDbService(containerName);
+			tasks = new TasksController(cosmosDBSettings);
+            youtubeTranscripts = new YoutubeTranscriptsController(cosmosDBSettings);
         }
 
         // GET: <TranscriptsController>
         [HttpGet]
-        public async Task<IEnumerable<TranscriptTask>> Get()
+        public async Task<IEnumerable<Transcript>> Get()
         {
-            return await _cosmosDbService.GetMultipleAsync("select * from c");
+            return await youtubeTranscripts.Get();
         }
 
         // GET <TranscriptsController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-			try
-			{
-				var result = await _cosmosDbService.GetAsync(id);
-				return StatusCode(StatusCodes.Status200OK, result);
-			}
-			catch (KeyNotFoundException)
-			{
-				return StatusCode(StatusCodes.Status204NoContent);
-			}
-			catch (Exception)
-			{
-				throw;
-			}
+            return await youtubeTranscripts.Get(id);
         }
 
         // POST <TranscriptsController>
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] TranscriptTask transcriptTask)
         {
-            transcriptTask.Id = Guid.NewGuid().ToString();
-            await _cosmosDbService.AddAsync(transcriptTask.Id, transcriptTask);
-            return StatusCode(StatusCodes.Status201Created, transcriptTask);
+            return await tasks.PostAsync(transcriptTask);
         }
 
 
@@ -59,32 +45,22 @@ namespace Speech2Text.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(string id, [FromBody] TranscriptTask transcriptTask)
         {
-            transcriptTask.Id = id; // to be sure
-            await _cosmosDbService.UpdateAsync(id, transcriptTask);
-            return Ok(transcriptTask);
+            return await tasks.Put(id, transcriptTask);
         }
 
         // DELETE <TranscriptsController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            await _cosmosDbService.DeleteAsync(id);
-            return Ok();
+            return await youtubeTranscripts.Delete(id);
         }
 
 		// DELETE <TranscriptsController>
 		[HttpDelete]
-		public async Task<IActionResult> Delete([FromBody] TranscriptTask templateTask)
+		public async Task<IActionResult> Delete([FromBody] Transcript template)
 		{
-			var query = new TranscriptQuery(templateTask).ToString();
-			var filteredTasks = await _cosmosDbService.GetMultipleAsync(query);
-			foreach (var t in filteredTasks)
-			{
-				await _cosmosDbService.DeleteAsync(t.Id);
-			}
-			
-			return Ok();
-		}
+            return await youtubeTranscripts.Delete(template);
+        }
 	}
 }
 

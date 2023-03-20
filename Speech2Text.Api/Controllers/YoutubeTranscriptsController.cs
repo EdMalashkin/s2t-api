@@ -69,5 +69,19 @@ namespace Speech2Text.Api.Controllers
 			await _cosmosDbService.DeleteAsync(id);
 			return Ok();
 		}
-	}
+
+        // DELETE <YoutubeTranscriptsController>/5
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] TranscriptTask template)
+        {
+            var query = new TranscriptQuery(template).ToString();
+            var filteredTasks = await _cosmosDbService.GetMultipleAsync(query);
+            foreach (var t in filteredTasks)
+            {
+                await _cosmosDbService.DeleteAsync(t.Id);
+            }
+
+            return Ok();
+        }
+    }
 }
