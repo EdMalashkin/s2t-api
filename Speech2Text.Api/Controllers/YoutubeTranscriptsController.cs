@@ -45,6 +45,11 @@ namespace Speech2Text.Api.Controllers
 			}
 		}
 
+		internal async Task<Transcript> GetTranscript(string id)
+		{
+			return await _cosmosDbService.GetAsync(id);
+		}
+
 		// POST <YoutubeTranscriptsController>
 		[HttpPost("{id}")]
 		public async Task<IActionResult> PostAsync(string id, [FromBody] Transcript json)

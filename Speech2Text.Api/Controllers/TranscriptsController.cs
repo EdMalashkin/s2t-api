@@ -33,8 +33,24 @@ namespace Speech2Text.Api.Controllers
             return await youtubeTranscripts.Get(id);
         }
 
-        // POST <TranscriptsController>
-        [HttpPost]
+		// GET <TranscriptsController>/5
+		[HttpGet("{id}/topics")]
+		public async Task<IActionResult> GetTopics(string id)
+		{
+			try
+			{
+				var transcript = await youtubeTranscripts.GetTranscript(id);
+				var stats = new Stats(transcript);
+				return StatusCode(StatusCodes.Status200OK, stats.GetTopics());
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+
+		// POST <TranscriptsController>
+		[HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] TranscriptTask transcriptTask)
         {
             return await tasks.PostAsync(transcriptTask);
