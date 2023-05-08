@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using Speech2Text.Core;
 using Speech2Text.Core.Models;
 using Speech2Text.Core.Services;
 
@@ -31,6 +33,34 @@ namespace Speech2Text.Api.Controllers
         public async Task<IActionResult> Get(string id)
         {
             return await youtubeTranscripts.Get(id);
+        }
+
+        // GET <TranscriptsController>/5/chart
+        [HttpGet("{id}/chart")]
+        public async Task<IActionResult> GetChart(string id)
+        {
+            Stream result = null;
+            var actionResult = await youtubeTranscripts.Get(id);
+            var okResult = actionResult as ObjectResult;
+            if (okResult != null && okResult.Value != null)
+            {
+                var transcript = okResult.Value as Transcript;
+                if (transcript != null && transcript.Data != null)
+                {
+                    var text = string.Join(" ", transcript.Data.Select(j => j.Value<string>("lemmatized")));
+                    var chart = new Chart(text);
+                    result = await chart.GetPng();
+                }
+                
+            }
+            if(result != null)
+            {
+                return StatusCode(StatusCodes.Status200OK, result);
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
         }
 
         // POST <TranscriptsController>
