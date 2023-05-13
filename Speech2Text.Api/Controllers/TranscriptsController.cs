@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using Speech2Text.Core;
 using Speech2Text.Core.Models;
 using Speech2Text.Core.Services;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Speech2Text.Api.Controllers
 {
@@ -14,11 +11,13 @@ namespace Speech2Text.Api.Controllers
     {
         private TasksController tasks;
         private YoutubeTranscriptsController youtubeTranscripts;
+        private Dictionary<string, string> quickChartSettings;
 
-        public TranscriptsController(CosmosDBSettings cosmosDBSettings)
+        public TranscriptsController(CosmosDBSettings cosmosDBSettings, Dictionary<string, string> quickChartSettings)
         {
-			tasks = new TasksController(cosmosDBSettings);
-            youtubeTranscripts = new YoutubeTranscriptsController(cosmosDBSettings);
+			this.tasks = new TasksController(cosmosDBSettings);
+            this.youtubeTranscripts = new YoutubeTranscriptsController(cosmosDBSettings);
+            this.quickChartSettings = quickChartSettings;
         }
 
         // GET: <TranscriptsController>
@@ -48,7 +47,7 @@ namespace Speech2Text.Api.Controllers
                 if (transcript != null && transcript.Data != null)
                 {
                     var text = string.Join(" ", transcript.Data.Select(j => j.Value<string>("lemmatized")));
-                    var chart = new Chart(text);
+                    var chart = new Chart(text, this.quickChartSettings);
                     result = await chart.GetPng();
                 }
                 

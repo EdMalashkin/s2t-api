@@ -9,17 +9,29 @@ namespace Speech2Text.Core
 {
     public class Chart
     {
-        private readonly string text;
+        private readonly Dictionary<string, string> settings;
 
-        public Chart(string text)
+        public Chart(string text) : this(
+            text,
+            new Dictionary<string, string>{
+                {"format","png"},
+                {"width","300"},
+                {"height","300"},
+                {"fontScale","15"},
+                {"scale","linear"},
+                {"text",""},
+            }){ }
+
+        public Chart(string text, Dictionary<string, string> settings)
         {
-            this.text = text;
-        }
+            this.settings = settings;
+            this.settings["text"] = text;
+    }
 
         public async Task<Stream> GetPng()
         {
             var chart = await "https://quickchart.io/wordcloud"
-            .PostJsonAsync(new { format = "png", width = "300", height = "300", fontScale = "15", scale = "linear", text = this.text })
+            .PostJsonAsync((object)this.settings)
             .ReceiveStream();
             return chart;  
         }
