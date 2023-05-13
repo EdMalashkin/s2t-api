@@ -26,8 +26,16 @@ namespace Speech2Text.Api.Controllers
 			return await _cosmosDbService.GetMultipleAsync("select * from c");
 		}
 
-		// GET <YoutubeTranscriptsController>/5
-		[HttpGet("{id}")]
+
+        [HttpGet]
+        public async Task<IEnumerable<Transcript>> Get([FromBody] TranscriptTask template)
+        {
+            var query = new TranscriptQuery(template).ToString();
+            return await _cosmosDbService.GetMultipleAsync(query);
+        }
+
+        // GET <YoutubeTranscriptsController>/5
+        [HttpGet("{id}")]
 		public async Task<IActionResult> Get(string id)
 		{
 			try
@@ -45,7 +53,7 @@ namespace Speech2Text.Api.Controllers
 			}
 		}
 
-		internal async Task<Transcript> GetTranscript(string id)
+        internal async Task<Transcript> GetTranscript(string id)
 		{
 			return await _cosmosDbService.GetAsync(id);
 		}
@@ -79,13 +87,11 @@ namespace Speech2Text.Api.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] TranscriptTask template)
         {
-            var query = new TranscriptQuery(template).ToString();
-            var filteredTasks = await _cosmosDbService.GetMultipleAsync(query);
+            var filteredTasks = await this.Get(template);
             foreach (var t in filteredTasks)
             {
                 await _cosmosDbService.DeleteAsync(t.Id);
             }
-
             return Ok();
         }
     }

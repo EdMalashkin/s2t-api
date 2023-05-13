@@ -27,6 +27,13 @@ namespace Speech2Text.Api.Controllers
             return await youtubeTranscripts.Get();
         }
 
+        // GET: <TranscriptsController>
+        [HttpGet("bytemplate")]
+        public async Task<IEnumerable<Transcript>> Get([FromBody] TranscriptTask template)
+        {
+            return await youtubeTranscripts.Get(template);
+        }
+
         // GET <TranscriptsController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
@@ -66,7 +73,14 @@ namespace Speech2Text.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] TranscriptTask transcriptTask)
         {
-            return await tasks.PostAsync(transcriptTask);
+            var existing = await youtubeTranscripts.Get(transcriptTask);
+            if (existing.Any()) {// optimization: return old if exists
+                return StatusCode(StatusCodes.Status200OK, existing.LastOrDefault());
+            }
+            else
+            {
+                return await tasks.PostAsync(transcriptTask);
+            }
         }
 
 
