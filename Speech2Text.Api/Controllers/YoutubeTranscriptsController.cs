@@ -27,7 +27,7 @@ namespace Speech2Text.Api.Controllers
 		}
 
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IEnumerable<Transcript>> Get([FromBody] TranscriptTask template)
         {
             var query = new TranscriptQuery(template).ToString();

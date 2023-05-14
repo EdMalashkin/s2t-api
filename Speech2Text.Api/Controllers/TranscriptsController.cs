@@ -28,7 +28,7 @@ namespace Speech2Text.Api.Controllers
         }
 
         // GET: <TranscriptsController>
-        [HttpGet("bytemplate")]
+        [HttpPost("bytemplate")]
         public async Task<IEnumerable<Transcript>> Get([FromBody] TranscriptTask template)
         {
             return await youtubeTranscripts.Get(template);
