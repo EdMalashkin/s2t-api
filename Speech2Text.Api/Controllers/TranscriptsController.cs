@@ -73,14 +73,16 @@ namespace Speech2Text.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] TranscriptTask transcriptTask)
         {
-            var existing = await youtubeTranscripts.Get(transcriptTask);
-            if (existing.Any()) {// optimization: return old if exists
-                return StatusCode(StatusCodes.Status200OK, existing.LastOrDefault());
-            }
-            else
-            {
-                return await tasks.PostAsync(transcriptTask);
-            }
+            // commented as now we have this logic at bot's client side
+            //var existing = await youtubeTranscripts.Get(transcriptTask);
+            //if (existing.Any()) {// optimization: return old if exists
+            //    return StatusCode(StatusCodes.Status200OK, existing.LastOrDefault());
+            //}
+            //else
+            //{
+            //    return await tasks.PostAsync(transcriptTask);
+            //}
+            return await tasks.PostAsync(transcriptTask);
         }
 
 
