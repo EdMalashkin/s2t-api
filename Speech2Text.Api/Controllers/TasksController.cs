@@ -50,6 +50,7 @@ namespace Speech2Text.Api.Controllers
         public async Task<IActionResult> PostAsync([FromBody] TranscriptTask transcriptTask)
         {
             transcriptTask.Id = Guid.NewGuid().ToString();
+            transcriptTask.CreatedAt = DateTime.Now;
             await _cosmosDbService.AddAsync(transcriptTask.Id, transcriptTask);
             return StatusCode(StatusCodes.Status201Created, transcriptTask);
         }
