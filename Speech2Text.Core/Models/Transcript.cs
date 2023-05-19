@@ -38,6 +38,8 @@ namespace Speech2Text.Core.Models
 
 		public JArray? Data { get; set; }
 
+        public string? Error { get; set; }
+
 		public string ToJson()
 		{
 			return JsonConvert.SerializeObject(this);
