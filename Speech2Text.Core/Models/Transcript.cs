@@ -1,11 +1,14 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿//using Newtonsoft.Json;
+//using Newtonsoft.Json.Linq;
+using System.Text.Json.Serialization;
+using System.Text.Json.Nodes;
 
 namespace Speech2Text.Core.Models
 {
     public class TranscriptTask
     {
-		public TranscriptTask() { }
+        [JsonConstructor]
+        public TranscriptTask() { }
 
         public TranscriptTask(string id, string originalUrl, string language)
         {
@@ -22,7 +25,6 @@ namespace Speech2Text.Core.Models
             this.ProcessedAt = processedAt;
         }
 
-        [JsonProperty(PropertyName = "id")] // until renamed in Azure
         public string Id { get; set; } = string.Empty;
         public string OriginalURL { get; set; } = string.Empty;
         public string Language { get; set; } = string.Empty;
@@ -30,20 +32,21 @@ namespace Speech2Text.Core.Models
         public DateTime? ProcessedAt { get; set; }
     }
 
-	public class Transcript : TranscriptTask
+    public class Transcript : TranscriptTask
 	{
-		public Transcript() { }
+        [JsonConstructor]
+        public Transcript() { }
 
 		public Transcript(TranscriptTask t) : base(t.Id, t.OriginalURL, t.Language, t.ProcessedAt) { }
 
-		[JsonProperty(Order = 10)] // to be the last one
-		public JArray? Data { get; set; }
+        //[JsonProperty(Order = 10)] // to be the last one
+        public JsonArray? Data { get; set; }
 
         public string? Error { get; set; }
 
-		public string ToJson()
-		{
-			return JsonConvert.SerializeObject(this);
-		}
+		//public string ToJson()
+		//{
+		//	return JsonConvert.SerializeObject(this);
+		//}
 	}
 }

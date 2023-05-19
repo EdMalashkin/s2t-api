@@ -1,10 +1,5 @@
-﻿using Flurl.Util;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
+using System.Text.Json.Nodes;
 
 namespace Speech2Text.Core.Models
 {
@@ -22,9 +17,9 @@ namespace Speech2Text.Core.Models
 			StringBuilder stringBuilder = new StringBuilder();
 			if (transcript.Data != null)
 			{
-				foreach (JObject o in transcript.Data)
+				foreach (JsonNode? o in transcript.Data)
 				{
-					stringBuilder.AppendFormat("{0} ", o.GetValue("lemmatized").ToString());
+					stringBuilder.AppendFormat("{0} ", o["lemmatized"]);
 				}
 			}
 			string text = stringBuilder.ToString();
