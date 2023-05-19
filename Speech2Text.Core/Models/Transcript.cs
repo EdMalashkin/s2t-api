@@ -36,6 +36,7 @@ namespace Speech2Text.Core.Models
 
 		public Transcript(TranscriptTask t) : base(t.Id, t.OriginalURL, t.Language, t.ProcessedAt) { }
 
+		[JsonProperty(Order = 10)] // to be the last one
 		public JArray? Data { get; set; }
 
         public string? Error { get; set; }
