@@ -24,7 +24,14 @@ namespace Speech2Text.Core.Services
         }
         public async Task<CosmosDbService<T>> GetCosmosDbServiceAsync()
         {
-            var client = new CosmosClient(endPoint, endPointKey);
+            var client = new CosmosClient(endPoint, endPointKey, new CosmosClientOptions()
+			{
+				SerializerOptions = new CosmosSerializationOptions()
+				{
+					PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase,
+					IgnoreNullValues = true
+				}
+			});
             var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
             await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
             var cosmosDbService = new CosmosDbService<T>(client, databaseName, containerName);

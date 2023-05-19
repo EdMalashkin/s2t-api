@@ -1,8 +1,5 @@
-using Speech2Text.Core.Models;
 using Speech2Text.Core.Services;
-using System.Configuration;
-using System.Dynamic;
-using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,16 +10,13 @@ builder.Services.AddSingleton(cosmosDBSettings);
 var quickChartSettings = builder.Configuration.GetSection("QuickChartSettings").GetChildren().ToDictionary(x => x.Key, x => x.Value);
 builder.Services.AddSingleton(quickChartSettings);
 
-builder.Services.AddControllers().AddNewtonsoftJson(); 
+builder.Services.AddControllers().AddNewtonsoftJson().AddJsonOptions(option =>
+{
+	option.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
