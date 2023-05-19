@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using System.Text.Json.Nodes;
+using Newtonsoft.Json.Linq;
 
 namespace Speech2Text.Core.Models
 {
@@ -17,11 +17,11 @@ namespace Speech2Text.Core.Models
 			StringBuilder stringBuilder = new StringBuilder();
 			if (transcript.Data != null)
 			{
-				foreach (JsonNode? o in transcript.Data)
-				{
-					stringBuilder.AppendFormat("{0} ", o["lemmatized"]);
-				}
-			}
+                foreach (JObject o in transcript.Data)
+                {
+                    stringBuilder.AppendFormat("{0} ", o.GetValue("lemmatized").ToString());
+                }
+            }
 			string text = stringBuilder.ToString();
 			char[] separators = new char[] { ' ', ',', ':', ';', '?', '!', '\n', '\r', '\t' };
 			var result = text.Split(separators)

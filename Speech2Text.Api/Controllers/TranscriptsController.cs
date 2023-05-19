@@ -53,7 +53,7 @@ namespace Speech2Text.Api.Controllers
                 var transcript = okResult.Value as Transcript;
                 if (transcript != null && transcript.Data != null)
                 {
-                    var text = string.Join(" ", transcript.Data.Select(j => j["lemmatized"]));
+                    var text = string.Join(" ", transcript.Data.Select(j => j.Value<string>("lemmatized")));
                     var chart = new Chart(text, this.quickChartSettings);
                     result = await chart.GetPng();
                 }

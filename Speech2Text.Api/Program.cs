@@ -10,10 +10,9 @@ builder.Services.AddSingleton(cosmosDBSettings);
 var quickChartSettings = builder.Configuration.GetSection("QuickChartSettings").GetChildren().ToDictionary(x => x.Key, x => x.Value);
 builder.Services.AddSingleton(quickChartSettings);
 
-//.AddNewtonsoftJson()
-builder.Services.AddControllers().AddJsonOptions(option =>
+builder.Services.AddControllers().AddNewtonsoftJson().AddJsonOptions(option =>
 {
-	option.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    option.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull; // doesn't work for some reason
 });
 
 var app = builder.Build();
