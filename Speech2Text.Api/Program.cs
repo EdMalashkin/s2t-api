@@ -12,7 +12,7 @@ builder.Services.AddSingleton(quickChartSettings);
 
 builder.Services.AddControllers().AddNewtonsoftJson().AddJsonOptions(option =>
 {
-	option.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    option.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull; // doesn't work for some reason
 });
 
 var app = builder.Build();
