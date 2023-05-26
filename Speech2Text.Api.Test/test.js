@@ -23,7 +23,7 @@ describe('Restful Speech2Test API Tests', async () => {
     });
     // 2
     it('should fetch the transcript of the provided transcript id', async () => {
-        await sleep(10000); //to avoid 204 status code
+        await sleep(15000); //to avoid 204 status code
         //const transcriptid = "d91fd098-6184-42fc-81d1-931b4dc4094a"
         console.log("transcriptid", transcriptid)
         const res = await request(baseurl)
