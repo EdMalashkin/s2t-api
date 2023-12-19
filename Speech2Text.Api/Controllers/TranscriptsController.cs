@@ -45,20 +45,13 @@ namespace Speech2Text.Api.Controllers
         [HttpGet("{id}/chart")]
         public async Task<IActionResult> GetChart(string id)
         {
-            Stream result = null;
-            var actionResult = await youtubeTranscripts.Get(id);
-            var okResult = actionResult as ObjectResult;
-            if (okResult != null && okResult.Value != null)
-            {
-                var transcript = okResult.Value as Transcript;
-                if (transcript != null && transcript.Data != null)
-                {
-                    var text = string.Join(" ", transcript.Data.Select(j => j.Value<string>("lemmatized")));
-                    var chart = new Chart(text, this.quickChartSettings);
-                    result = await chart.GetPng();
-                }
-                
-            }
+            Stream? result = null;
+			string? text = await GetTranscriptDetails(id, "lemmatized");
+			if (text != null)
+			{
+				var chart = new Chart(text, this.quickChartSettings);
+				result = await chart.GetPng();
+			}
             if(result != null)
             {
                 return StatusCode(StatusCodes.Status200OK, result);
@@ -69,8 +62,41 @@ namespace Speech2Text.Api.Controllers
             }
         }
 
-        // POST <TranscriptsController>
-        [HttpPost]
+
+		// GET <TranscriptsController>/5/text
+		[HttpGet("{id}/{textType}")]
+		public async Task<IActionResult> GetText(string id, string textType)
+		{
+			string? result = await GetTranscriptDetails(id, textType);
+			if (result != null)
+			{
+				return StatusCode(StatusCodes.Status200OK, result);
+			}
+			else
+			{
+				return StatusCode(StatusCodes.Status404NotFound);
+			}
+		}
+
+
+		private async Task<string?> GetTranscriptDetails(string id, string attrName = "text")
+		{
+			string? result = null;
+			var actionResult = await youtubeTranscripts.Get(id);
+			var okResult = actionResult as ObjectResult;
+			if (okResult != null && okResult.Value != null)
+			{
+				var transcript = okResult.Value as Transcript;
+				if (transcript != null && transcript.Data != null)
+				{
+					result = string.Join(" ", transcript.Data.Select(j => j.Value<string>(attrName)));
+				}
+			}
+			return result;
+		}
+
+		// POST <TranscriptsController>
+		[HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] TranscriptTask transcriptTask)
         {
             // commented as now we have this logic at bot's client side
