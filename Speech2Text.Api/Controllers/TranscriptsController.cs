@@ -62,6 +62,17 @@ namespace Speech2Text.Api.Controllers
             }
         }
 
+		[HttpGet("{id}/stats")]
+		public async Task<IActionResult> GetStats(string id)
+		{
+			var transcript = await GetTranscript(id);
+			if (transcript != null)
+			{
+				Stats s = new Stats(transcript);
+				return StatusCode(StatusCodes.Status200OK, s.GetTopics());
+			}
+			return StatusCode(StatusCodes.Status404NotFound);
+		}
 
 		// GET <TranscriptsController>/5/text
 		[HttpGet("{id}/{textType}")]
@@ -78,19 +89,29 @@ namespace Speech2Text.Api.Controllers
 			}
 		}
 
-
-		private async Task<string?> GetTranscriptDetails(string id, string attrName = "text")
+		private async Task<Transcript?> GetTranscript(string id)
 		{
-			string? result = null;
+			Transcript? result = null;
 			var actionResult = await youtubeTranscripts.Get(id);
 			var okResult = actionResult as ObjectResult;
 			if (okResult != null && okResult.Value != null)
 			{
 				var transcript = okResult.Value as Transcript;
-				if (transcript != null && transcript.Data != null)
+				if (transcript != null)
 				{
-					result = string.Join(" ", transcript.Data.Select(j => j.Value<string>(attrName)));
+					result = transcript;
 				}
+			}
+			return result;
+		}
+
+		private async Task<string?> GetTranscriptDetails(string id, string attrName = "text")
+		{
+			string? result = null;
+			var transcript = await GetTranscript(id);
+			if (transcript != null && transcript.Data != null)
+			{
+				result = string.Join(" ", transcript.Data.Select(j => j.Value<string>(attrName)));
 			}
 			return result;
 		}
