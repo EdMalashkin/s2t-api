@@ -17,8 +17,9 @@ namespace Speech2Text.Core.Models
 		public override string ToString()
 		{
 			_query.Append("select * from c");
-			if (_transcript.OriginalURL.Length > 0) Append(String.Format("c.OriginalURL= \"{0}\"", _transcript.OriginalURL));
-			if (_transcript.Language.Length > 0) Append(String.Format("c.Language= \"{0}\"", _transcript.Language));
+			if (_transcript.OriginalURL.Length > 0) Append(String.Format("c.originalURL= \"{0}\"", _transcript.OriginalURL));
+			if (_transcript.Language.Length > 0) Append(String.Format("c.language= \"{0}\"", _transcript.Language));
+			_query.Append(" order by c._ts desc ");
 			return _query.ToString();
 		}
 
