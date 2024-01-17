@@ -38,7 +38,7 @@ namespace Speech2Text.Core.Models
 				var result = transcript.Data
 									.Where(x => x.Value<string>("lemmatized").Split(separators).Contains(keyword))
 									//.Select(l => new { Link = GetLink(l), Start = l.Value<double>("start") })
-									.Select(l => new { Link = GetLink(l)})
+									.Select(l => new { Link = GetLink(l), Text = l.Value<string>("text") })
 									.ToList();
 				return result;
 			}
