@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace Speech2Text.Core.Models
 {
@@ -48,7 +47,8 @@ namespace Speech2Text.Core.Models
 
 		private string GetLink(JToken l)
 		{
-			return String.Format("{0}?t={1}", transcript.OriginalURL, GetTimeInSec(l.Value<double>("start")));
+			string delim = transcript.OriginalURL.Contains("?") ? "&" : "?";
+			return String.Format("{0}{1}t={2}", transcript.OriginalURL, delim, GetTimeInSec(l.Value<double>("start")));
 		}
 
 		private int GetTimeInSec(double time)
