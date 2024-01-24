@@ -18,17 +18,18 @@ namespace Speech2Text.Core.Models
 			if (transcript != null && transcript.Data != null)
 			{
 				text = string.Join(" ", transcript.Data.Select(j => j.Value<string>("lemmatized")));
+
+				var result = text.Split(separators)
+					.Where(x => x.Length > 0)
+					.GroupBy(x => x)
+					.Select(g => new { Word = g.Key, Freq = g.Count(), Links = GetLinks(g.Key) })
+					.Where(x => x.Freq > 1)
+					.OrderByDescending(g => g.Freq)
+					.ThenBy(g => g.Word)
+					.ToList();
+				return new { Link = transcript.OriginalURL, Stats = result };
 			}
-			
-			var result = text.Split(separators)
-								.Where(x => x.Length > 0)   
-								.GroupBy(x => x)
-								.Select(g => new { Word = g.Key, Freq = g.Count(), Links = GetLinks(g.Key) })
-								.Where(x => x.Freq > 1)
-								.OrderByDescending(g => g.Freq)
-								.ThenBy(g => g.Word)
-								.ToList();
-			return result;
+			else throw new Exception("No data");
 		}
 
 		private object GetLinks(string keyword)
@@ -37,8 +38,9 @@ namespace Speech2Text.Core.Models
 			{
 				var result = transcript.Data
 									.Where(x => x.Value<string>("lemmatized").Split(separators).Contains(keyword))
-									//.Select(l => new { Link = GetLink(l), Start = l.Value<double>("start") })
-									.Select(l => new { Link = GetLink(l), Text = l.Value<string>("text") })
+									//.Select(l => new { Link = GetLink(l), Start = GetTimeInSec(l.Value<double>("start")) })
+									//.Select(l => new { Link = GetLink(l), Text = l.Value<string>("text") })
+									.Select(l => new { Start = GetTimeInSec(l.Value<double>("start")), Text = l.Value<string>("text") })
 									.ToList();
 				return result;
 			}
