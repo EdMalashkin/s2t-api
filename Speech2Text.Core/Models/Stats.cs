@@ -27,7 +27,7 @@ namespace Speech2Text.Core.Models
 					.OrderByDescending(g => g.Freq)
 					.ThenBy(g => g.Word)
 					.ToList();
-				return new { Link = transcript.OriginalURL, Stats = result };
+				return new { Url = transcript.OriginalURL, Stats = result };
 			}
 			else throw new Exception("No data");
 		}
