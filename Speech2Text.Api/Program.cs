@@ -10,6 +10,12 @@ builder.Services.AddSingleton(cosmosDBSettings);
 var quickChartSettings = builder.Configuration.GetSection("QuickChartSettings").GetChildren().ToDictionary(x => x.Key, x => x.Value);
 builder.Services.AddSingleton(quickChartSettings);
 
+var origins = builder.Configuration.GetSection("AllowedCorsOrigins").Value?.Split(";") ?? Array.Empty<string>();
+builder.Services.AddCors(options =>
+{
+	options.AddDefaultPolicy(policy => {policy.WithOrigins(origins);});
+});
+
 builder.Services.AddControllers().AddNewtonsoftJson().AddJsonOptions(option =>
 {
     option.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull; // doesn't work for some reason
@@ -17,6 +23,7 @@ builder.Services.AddControllers().AddNewtonsoftJson().AddJsonOptions(option =>
 
 var app = builder.Build();
 app.UseHttpsRedirection();
+app.UseCors();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
