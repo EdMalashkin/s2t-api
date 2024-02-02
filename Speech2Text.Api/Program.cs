@@ -13,7 +13,7 @@ builder.Services.AddSingleton(quickChartSettings);
 var origins = builder.Configuration.GetSection("AllowedCorsOrigins").Value?.Split(";") ?? Array.Empty<string>();
 builder.Services.AddCors(options =>
 {
-	options.AddDefaultPolicy(policy => {policy.WithOrigins(origins);});
+	options.AddDefaultPolicy(policy => {policy.WithOrigins(origins).AllowAnyHeader().AllowAnyMethod();});
 });
 
 builder.Services.AddControllers().AddNewtonsoftJson().AddJsonOptions(option =>
