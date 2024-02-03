@@ -27,15 +27,22 @@ namespace Speech2Text.Api.Controllers
             return await youtubeTranscripts.Get();
         }
 
-        // GET: <TranscriptsController>
+        // GET: <TranscriptsController>/bytemplate
         [HttpPost("bytemplate")]
         public async Task<IEnumerable<Transcript>> Get([FromBody] TranscriptTask template)
         {
             return await youtubeTranscripts.Get(template);
         }
 
-        // GET <TranscriptsController>/5
-        [HttpGet("{id}")]
+		// GET: <TranscriptsController>/getIdByMediaId/{mediaId}
+		[HttpGet("getIdByMediaId/{mediaId}")]
+		public async Task<IActionResult> GetIdByMediaId(string mediaId)
+		{
+			return await youtubeTranscripts.GetIdByMediaId(mediaId); 
+		}
+
+		// GET <TranscriptsController>/5
+		[HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
             return await youtubeTranscripts.Get(id);

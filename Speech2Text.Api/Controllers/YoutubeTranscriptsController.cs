@@ -53,6 +53,25 @@ namespace Speech2Text.Api.Controllers
 			}
 		}
 
+		// GET: <YoutubeTranscriptsController>/getIdByMediaId/{mediaId}
+		[HttpGet("getIdByMediaId/{mediaId}")]
+		public async Task<IActionResult> GetIdByMediaId(string mediaId)
+		{
+			try
+			{
+				var result = await _cosmosDbService.GetMultipleAsync($"SELECT top 1 c.id FROM c WHERE c.originalURL LIKE '%{mediaId}%' ORDER BY c._ts DESC"); // todo: optimize search architecture
+				return StatusCode(StatusCodes.Status200OK, result?.FirstOrDefault()?.Id);
+			}
+			catch (KeyNotFoundException)
+			{
+				return StatusCode(StatusCodes.Status204NoContent);
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+
         internal async Task<Transcript> GetTranscript(string id)
 		{
 			return await _cosmosDbService.GetAsync(id);
