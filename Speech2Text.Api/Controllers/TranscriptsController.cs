@@ -70,13 +70,13 @@ namespace Speech2Text.Api.Controllers
         }
 
 		[HttpGet("{id}/stats")]
-		public async Task<IActionResult> GetStats(string id)
+		public async Task<IActionResult> GetStats(string id, [FromQuery] int minfreq = 2)
 		{
 			var transcript = await GetTranscript(id);
 			if (transcript != null)
 			{
 				Stats s = new Stats(transcript);
-				return StatusCode(StatusCodes.Status200OK, s.GetTopics());
+				return StatusCode(StatusCodes.Status200OK, s.GetTopics(minfreq));
 			}
 			return StatusCode(StatusCodes.Status404NotFound);
 		}

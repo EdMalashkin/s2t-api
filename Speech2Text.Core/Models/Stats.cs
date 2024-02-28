@@ -12,7 +12,7 @@ namespace Speech2Text.Core.Models
 			this.transcript = t;
 		}
 
-		public object GetTopics()
+		public object GetTopics(int minfreq)
 		{
 			string text = "";
 			if (transcript != null && transcript.Data != null)
@@ -23,7 +23,7 @@ namespace Speech2Text.Core.Models
 					.Where(x => x.Length > 0)
 					.GroupBy(x => x)
 					.Select(g => new { Word = g.Key, Freq = g.Count(), Links = GetLinks(g.Key) })
-					.Where(x => x.Freq > 1)
+					.Where(x => x.Freq >= minfreq)
 					.OrderByDescending(g => g.Freq)
 					.ThenBy(g => g.Word)
 					.ToList();
