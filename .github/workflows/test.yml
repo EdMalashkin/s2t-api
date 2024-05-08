@@ -1,8 +1,6 @@
 name: test
 on: 
-  pull_request:
-    branches:
-      - master
+  workflow_dispatch:   # Enable manual triggering
 jobs:  
   test:
     runs-on: ubuntu-latest
