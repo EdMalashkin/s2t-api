@@ -1,6 +1,10 @@
-const request = require('supertest');
-const expect = require('chai').expect;
-const transcript = require('./testdata/newtranscript.json');
+import request from 'supertest';
+import { expect } from 'chai';
+
+const transcript = {
+    "originalURL": "https://www.youtube.com/watch?v=testid",
+    "language": "uk"
+}
 const transcriptEdited = transcript;
 transcriptEdited.originalURL += '2';
 transcriptEdited.language = 'en';
@@ -20,12 +24,13 @@ describe('Restful Speech2Test API Tests', async () => {
         expect(res.body.language).to.be.equal(transcript.language);
         expect(res.body.id).not.to.be.null;
         transcriptid = res.body.id; 
+        //console.log("transcriptid created", transcriptid)
     });
     // 2
     it('should fetch the transcript of the provided transcript id', async () => {
         await sleep(15000); //to avoid 204 status code
         //const transcriptid = "d91fd098-6184-42fc-81d1-931b4dc4094a"
-        console.log("transcriptid", transcriptid)
+        //console.log("transcriptid fetched", transcriptid)
         const res = await request(baseurl)
         .get('/transcripts/' + transcriptid)        
         .set('Accept', 'application/json')
