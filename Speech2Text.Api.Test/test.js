@@ -12,10 +12,6 @@ transcriptEdited.language = 'en';
 describe('Restful Speech2Test API Tests', async () => {
     const baseurl = 'https://speech2text-web.azurewebsites.net';
     let transcriptid;
-    beforeEach(async function() {
-        // a delay before each test
-        await sleep(3000);
-      });
     // 1
     it('should successfully create a transcript', async () => {
         const res = await request(baseurl)
@@ -34,7 +30,7 @@ describe('Restful Speech2Test API Tests', async () => {
     it('should fetch the transcript of the provided transcript id', async () => {
         await sleep(15000); //to avoid 204 status code
         //const transcriptid = "d91fd098-6184-42fc-81d1-931b4dc4094a"
-        //console.log("transcriptid fetched", transcriptid)
+        console.log("transcriptid fetched", transcriptid)
         const res = await request(baseurl)
         .get('/transcripts/' + transcriptid)        
         .set('Accept', 'application/json')
@@ -77,6 +73,7 @@ describe('Restful Speech2Test API Tests', async () => {
     });
     // 6
     it('should fetch the transcript of the deleted transcript id', async () => {
+        await sleep(3000)
         const res = await request(baseurl)
         .get('/transcripts/' + transcriptid)
         .set('Accept', 'application/json')
