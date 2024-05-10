@@ -12,6 +12,10 @@ transcriptEdited.language = 'en';
 describe('Restful Speech2Test API Tests', async () => {
     const baseurl = 'https://speech2text-web.azurewebsites.net';
     let transcriptid;
+    beforeEach(async function() {
+        // a delay before each test
+        await sleep(3000);
+      });
     // 1
     it('should successfully create a transcript', async () => {
         const res = await request(baseurl)
