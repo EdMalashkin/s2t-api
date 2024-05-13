@@ -6,6 +6,6 @@
     "supertest": "^7.0.0"
   },
   "scripts": {
-    "test": "mocha --timeout 60000 test.js && mocha --reporter json > test-results.json"
+    "test": "mocha --timeout 60000 test.js"
   }
 }
