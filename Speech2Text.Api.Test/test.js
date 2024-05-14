@@ -73,7 +73,7 @@ describe('Restful Speech2Test API Tests', async () => {
     });
     // 6
     it('should fetch the transcript of the deleted transcript id', async () => {
-        await sleep(10000)
+        await sleep(20000)
         const res = await request(baseurl)
         .get('/transcripts/' + transcriptid)
         .set('Accept', 'application/json')
