@@ -25,5 +25,5 @@ jobs:
       with:
         name: playwright-report
         path: Speech2Text.Api.Test2/playwright-report/
-        retention-days: 30
+        retention-days: 2
 
