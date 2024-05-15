@@ -32,7 +32,7 @@ namespace Speech2Text.Core.Models
 			else throw new Exception("No data");
 		}
 
-		private object GetLinks(string keyword)
+		private object? GetLinks(string keyword)
 		{
 			if (transcript != null && transcript.Data != null)
 			{
