@@ -42,7 +42,7 @@ namespace Speech2Text.Core.Models
 									//.Select(l => new { Link = GetLink(l), Text = l.Value<string>("text") })
 									.Select(l => new { Start = GetTimeInSec(l.Value<double>("start")), 
 														Text = l.Value<string>("text"),
-														Order = GetOrderIndexes(keyword, l.Value<string>("text"), l.Value<string>("cleaned"), l.Value<string>("lemmatized"))
+														Indexes = GetOrderIndexes(keyword, l.Value<string>("text"), l.Value<string>("cleaned"), l.Value<string>("lemmatized"))
 									})
 									.ToList();
 				return result;
