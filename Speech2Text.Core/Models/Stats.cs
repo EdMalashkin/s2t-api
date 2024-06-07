@@ -40,11 +40,65 @@ namespace Speech2Text.Core.Models
 									.Where(x => x.Value<string>("lemmatized").Split(separators).Contains(keyword))
 									//.Select(l => new { Link = GetLink(l), Start = GetTimeInSec(l.Value<double>("start")) })
 									//.Select(l => new { Link = GetLink(l), Text = l.Value<string>("text") })
-									.Select(l => new { Start = GetTimeInSec(l.Value<double>("start")), Text = l.Value<string>("text") })
+									.Select(l => new { Start = GetTimeInSec(l.Value<double>("start")), 
+														Text = l.Value<string>("text"),
+														Indexes = GetOrderIndexes(keyword, l.Value<string>("text"), l.Value<string>("cleaned"), l.Value<string>("lemmatized"))
+									})
 									.ToList();
 				return result;
 			}
 			return null;
+		}
+
+		private List<int> GetOrderIndexes(string keyword, string text, string cleaned, string lemmatized)
+		{
+			List<int> lemmatizedIndexes = FindIndexes(lemmatized.Split(separators), keyword);
+			List<string> cleanedWords = FindWords(cleaned.Split(separators), lemmatizedIndexes);
+			List<int> textIndexes = FindIndexes(text.Split(separators), cleanedWords);
+			return textIndexes;
+		}
+
+		private List<string> FindWords(string[] array, List<int> indexes)
+		{
+			List<string> result = new List<string>();
+			foreach (int index in indexes)
+			{
+				if (index >= 0 && index < array.Length)
+				{
+					result.Add(array[index]);
+				}
+				else
+				{
+					throw new ArgumentOutOfRangeException(nameof(index), $"Index {index} is out of the bounds of the array.");
+				}
+			}
+			return result;
+		}
+
+		private List<int> FindIndexes(string[] array, List<string> words)
+		{
+			List<int> result = new List<int>();
+			for (int i = 0; i < array.Length; i++)
+			{
+				if (words.Contains(array[i]))
+				{
+					result.Add(i);
+				}
+			}
+			return result;
+		}
+
+		private List<int> FindIndexes(string[] array, string searchString)
+		{
+			List<int> indexes = new List<int>();
+			for (int i = 0; i < array.Length; i++)
+			{
+				if (array[i] == searchString)
+				{
+					indexes.Add(i);
+				}
+			}
+			return indexes;
 		}
 
 		private string GetLink(JToken l)
