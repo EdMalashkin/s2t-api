@@ -80,7 +80,7 @@ namespace Speech2Text.Core.Models
 			List<int> result = new List<int>();
 			for (int i = 0; i < array.Length; i++)
 			{
-				if (words.Contains(array[i]))
+				if (words.Contains(array[i], StringComparer.CurrentCultureIgnoreCase))
 				{
 					result.Add(i);
 				}
@@ -93,7 +93,7 @@ namespace Speech2Text.Core.Models
 			List<int> indexes = new List<int>();
 			for (int i = 0; i < array.Length; i++)
 			{
-				if (array[i] == searchString)
+				if (array[i].Equals(searchString, StringComparison.CurrentCultureIgnoreCase))
 				{
 					indexes.Add(i);
 				}
