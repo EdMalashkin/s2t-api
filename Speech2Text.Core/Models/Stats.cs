@@ -32,7 +32,7 @@ namespace Speech2Text.Core.Models
 			else throw new Exception("No data");
 		}
 
-		private object? GetLinks(string keyword)
+		public List<KeywordLinks>? GetLinks(string keyword)
 		{
 			if (transcript != null && transcript.Data != null)
 			{
@@ -40,9 +40,10 @@ namespace Speech2Text.Core.Models
 									.Where(x => x.Value<string>("lemmatized").Split(separators).Contains(keyword))
 									//.Select(l => new { Link = GetLink(l), Start = GetTimeInSec(l.Value<double>("start")) })
 									//.Select(l => new { Link = GetLink(l), Text = l.Value<string>("text") })
-									.Select(l => new { Start = GetTimeInSec(l.Value<double>("start")), 
-														Text = l.Value<string>("text"),
-														Indexes = GetOrderIndexes(keyword, l.Value<string>("text"), l.Value<string>("cleaned"), l.Value<string>("lemmatized"))
+									.Select(l => new KeywordLinks()
+									{	Start = GetTimeInSec(l.Value<double>("start")), 
+										Text = l.Value<string>("text"),
+										Indexes = GetOrderIndexes(keyword, l.Value<string>("text"), l.Value<string>("cleaned"), l.Value<string>("lemmatized"))
 									})
 									.ToList();
 				return result;
