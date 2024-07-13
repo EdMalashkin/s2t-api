@@ -32,7 +32,9 @@ namespace Speech2Text.Core.Tests
 		{
 			List<KeywordLinks>? expected = new List<KeywordLinks> {new KeywordLinks { Start = 4, Text = "а слово1 і слова2 і ще раз Слову1", Indexes = new List<int> { 1, 7 } }};
 			List<KeywordLinks>? actual = new Stats(transcript).GetLinks("слово1");
-			Assert.AreEqual(expected.First(), actual?.First());
+			Assert.AreEqual(expected.First().Text, actual?.First().Text);
+			Assert.AreEqual(expected.First().Start, actual?.First().Start);
+			if(actual != null) Assert.IsTrue(expected.First().Indexes.SequenceEqual(actual.First().Indexes));
 		}
 	}
 }
