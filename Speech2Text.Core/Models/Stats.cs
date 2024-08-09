@@ -22,7 +22,7 @@ namespace Speech2Text.Core.Models
 				var result = text.Split(separators)
 					.Where(x => x.Length > 0)
 					.GroupBy(x => x)
-					.Select(g => new { Word = g.Key, Freq = g.Count(), Links = GetLinks(g.Key) })
+					.Select(g => new { Word = g.Key.ToUpper(), Freq = g.Count(), Links = GetLinks(g.Key) })
 					.Where(x => x.Freq >= minfreq)
 					.OrderByDescending(g => g.Freq)
 					.ThenBy(g => g.Word)
