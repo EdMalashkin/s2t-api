@@ -22,7 +22,7 @@ namespace Speech2Text.Core.Models
 				var result = text.Split(separators)
 					.Where(x => x.Length > 0)
 					.GroupBy(x => x)
-					.Select(g => new { Word = g.Key, Freq = g.Count(), Links = GetLinks(g.Key) })
+					.Select(g => new { Word = g.Key.ToUpper(), Freq = g.Count(), Links = GetLinks(g.Key) })
 					.Where(x => x.Freq >= minfreq)
 					.OrderByDescending(g => g.Freq)
 					.ThenBy(g => g.Word)
@@ -32,7 +32,7 @@ namespace Speech2Text.Core.Models
 			else throw new Exception("No data");
 		}
 
-		private object? GetLinks(string keyword)
+		public List<KeywordLinks>? GetLinks(string keyword)
 		{
 			if (transcript != null && transcript.Data != null)
 			{
@@ -40,9 +40,10 @@ namespace Speech2Text.Core.Models
 									.Where(x => x.Value<string>("lemmatized").Split(separators).Contains(keyword))
 									//.Select(l => new { Link = GetLink(l), Start = GetTimeInSec(l.Value<double>("start")) })
 									//.Select(l => new { Link = GetLink(l), Text = l.Value<string>("text") })
-									.Select(l => new { Start = GetTimeInSec(l.Value<double>("start")), 
-														Text = l.Value<string>("text"),
-														Indexes = GetOrderIndexes(keyword, l.Value<string>("text"), l.Value<string>("cleaned"), l.Value<string>("lemmatized"))
+									.Select(l => new KeywordLinks()
+									{	Start = GetTimeInSec(l.Value<double>("start")), 
+										Text = l.Value<string>("text"),
+										Indexes = GetOrderIndexes(keyword, l.Value<string>("text"), l.Value<string>("cleaned"), l.Value<string>("lemmatized"))
 									})
 									.ToList();
 				return result;
@@ -80,7 +81,7 @@ namespace Speech2Text.Core.Models
 			List<int> result = new List<int>();
 			for (int i = 0; i < array.Length; i++)
 			{
-				if (words.Contains(array[i]))
+				if (words.Contains(array[i], StringComparer.CurrentCultureIgnoreCase))
 				{
 					result.Add(i);
 				}
@@ -93,7 +94,7 @@ namespace Speech2Text.Core.Models
 			List<int> indexes = new List<int>();
 			for (int i = 0; i < array.Length; i++)
 			{
-				if (array[i] == searchString)
+				if (array[i].Equals(searchString, StringComparison.CurrentCultureIgnoreCase))
 				{
 					indexes.Add(i);
 				}

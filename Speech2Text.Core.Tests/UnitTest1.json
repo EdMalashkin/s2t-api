@@ -1,0 +1,17 @@
+{
+	"processedAt": "2024-06-07T21:06:01",
+	"error": null,
+	"id": "acdafca6-e821-412f-b40d-416e88e333be",
+	"originalURL": "https://www.youtube.com/watch?v=test",
+	"language": "uk",
+	"createdAt": "2024-06-07T21:05:47.4547182+00:00",
+	"data": [
+		{
+			"text": "а слово1 і слова2 і ще раз Слову1",
+			"start": 4.279,
+			"duration": 6.601,
+			"cleaned": "слово1 слова2 Слову1",
+			"lemmatized": "слово1 слово2 слово1"
+		}
+	]
+}

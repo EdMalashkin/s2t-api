@@ -75,6 +75,10 @@ namespace Speech2Text.Api.Controllers
 			var transcript = await GetTranscript(id);
 			if (transcript != null)
 			{
+				if (transcript.Data == null && transcript.Error?.Length > 0)
+				{
+					return StatusCode(StatusCodes.Status404NotFound, new { message = $"An error occurred while processing the audio: {Environment.NewLine}{transcript.Error}" });
+				}
 				Stats s = new Stats(transcript);
 				return StatusCode(StatusCodes.Status200OK, s.GetTopics(minfreq));
 			}
