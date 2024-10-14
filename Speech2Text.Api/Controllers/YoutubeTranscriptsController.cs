@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Speech2Text.Core.Models;
 using Speech2Text.Core.Services;
-
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Speech2Text.Api.Controllers
@@ -21,9 +20,10 @@ namespace Speech2Text.Api.Controllers
 
 		// GET: <YoutubeTranscriptsController>
 		[HttpGet]
-		public async Task<IEnumerable<Transcript>> Get()
+		public async Task<IEnumerable<String>> Get()
 		{
-			return await _cosmosDbService.GetMultipleAsync("select * from c");
+			var result = await _cosmosDbService.GetMultipleAsync("select c.id from c");
+			return result.Select(t => t.Id);
 		}
 
 

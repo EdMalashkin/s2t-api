@@ -22,7 +22,7 @@ namespace Speech2Text.Api.Controllers
 
         // GET: <TranscriptsController>
         [HttpGet]
-        public async Task<IEnumerable<Transcript>> Get()
+        public async Task<IEnumerable<String>> Get()
         {
             return await youtubeTranscripts.Get();
         }
