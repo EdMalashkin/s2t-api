@@ -6,7 +6,7 @@ namespace Speech2Text.Core.Models
 	public class KeywordLinks
 	{
 		public int Start;
-		public string Text;
-		public List<int> Indexes;
+		public required string Text;
+		public required List<int> Indexes;
 	}
 }
