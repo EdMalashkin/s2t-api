@@ -56,10 +56,10 @@ namespace Speech2Text.Api.Controllers
 		// GET: <YoutubeTranscriptsController>/getIdByMediaId/{mediaId}
 		[HttpGet("getIdByMediaId/{mediaId}")]
 		public async Task<IActionResult> GetIdByMediaId(string mediaId)
-		{
+		{ // get successful transcripts only!!!
 			try
-			{
-				var result = await _cosmosDbService.GetMultipleAsync($"SELECT top 1 c.id FROM c WHERE c.originalURL LIKE '%{mediaId}%' ORDER BY c._ts DESC"); // todo: optimize search architecture
+			{   //SELECT * FROM c WHERE c.OriginalURL LIKE '%j7JsuOmqheY%' AND IS_DEFINED(c.Data) ORDER BY c._ts DESC -- script to run in Azure Cosmos DB with capital letters
+				var result = await _cosmosDbService.GetMultipleAsync($"SELECT top 1 c.id FROM c WHERE c.originalURL LIKE '%{mediaId}%' AND IS_DEFINED(c.data) ORDER BY c._ts DESC"); // todo: optimize search architecture
 				return StatusCode(StatusCodes.Status200OK, result?.FirstOrDefault()?.Id);
 			}
 			catch (KeyNotFoundException)
