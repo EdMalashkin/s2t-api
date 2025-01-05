@@ -19,7 +19,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.x.x
+          dotnet-version: 9.x.x
 
       - name: Build with dotnet
         run: dotnet build ${{github.workspace}}/Speech2Text.Api/Speech2Text.Api.csproj --configuration Release
