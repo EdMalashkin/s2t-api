@@ -9,6 +9,7 @@ builder.Services.AddSingleton(cosmosDBSettings);
 
 var quickChartSettings = builder.Configuration.GetSection("QuickChartSettings").GetChildren().ToDictionary(x => x.Key, x => x.Value);
 builder.Services.AddSingleton(quickChartSettings);
+builder.Services.AddHttpClient();
 
 var origins = builder.Configuration.GetSection("AllowedCorsOrigins").Value?.Split(";") ?? Array.Empty<string>();
 builder.Services.AddCors(options =>
