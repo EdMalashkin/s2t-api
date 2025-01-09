@@ -39,12 +39,12 @@ namespace Speech2Text.Core.Models
 										.Select(token => new { 
 																Lemma = (string)token["lemma"], 
 																Text = (string)parent["text"],
-																Start = GetTimeInSec((double)parent["start"]),
+																Time = GetTimeInSec((double)parent["start"]),
 																Offset = (int)token["offset"]
 										}))
-									.GroupBy(l => new { l.Text, l.Start })
+									.GroupBy(l => new { l.Text, l.Time })
 									.Select(l => new KeywordLinks2()
-									{	Time = l.Key.Start, 
+									{	Time = l.Key.Time, 
 										Text = l.Key.Text,
 										Offsets = l.Select(t => t.Offset).ToList() // Aggregate all positions into a list
 									})
