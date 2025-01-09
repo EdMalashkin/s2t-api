@@ -13,7 +13,6 @@ namespace Speech2Text.Core.Models
 
 		public object GetTopics(int minfreq)
 		{
-			string text = "";
 			if (transcript != null && transcript.Data != null)
 			{
 				var result = transcript.Data
@@ -30,7 +29,7 @@ namespace Speech2Text.Core.Models
 			else throw new Exception("No data");
 		}
 
-		public List<KeywordLinks>? GetLinks(string keyword)
+		public List<KeywordLinks2>? GetLinks(string keyword)
 		{
 			if (transcript != null && transcript.Data != null)
 			{
@@ -41,15 +40,13 @@ namespace Speech2Text.Core.Models
 																Lemma = (string)token["lemma"], 
 																Text = (string)parent["text"],
 																Start = GetTimeInSec((double)parent["start"]),
-																Position = (int)token["start"],
-																Index = (int)token["index"]
+																Offset = (int)token["offset"]
 										}))
 									.GroupBy(l => new { l.Text, l.Start })
-									.Select(l => new KeywordLinks()
-									{	Start = l.Key.Start, 
+									.Select(l => new KeywordLinks2()
+									{	Time = l.Key.Start, 
 										Text = l.Key.Text,
-										Indexes = l.Select(t => t.Position).ToList()
-										// Positions = l.Select(t => t.Position).ToList() // Aggregate all positions into a list
+										Offsets = l.Select(t => t.Offset).ToList() // Aggregate all positions into a list
 									})
 									.ToList();
 				return result;

@@ -12,8 +12,8 @@ namespace Speech2Text.Core.Models
 
 	public class KeywordLinks2
 	{
-		public int Start;
+		public int Time;
 		public required string Text;
-		public required List<int> Positions;
+		public required List<int> Offsets;
 	}
 }
