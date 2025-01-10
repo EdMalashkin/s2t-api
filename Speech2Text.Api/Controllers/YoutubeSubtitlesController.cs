@@ -55,7 +55,6 @@ namespace Speech2Text.Api.Controllers
 				{
 					return StatusCode(StatusCodes.Status404NotFound, new { message = transcript.Error });
 				}
-				Stats s = new Stats(transcript);
 				return StatusCode(StatusCodes.Status200OK, s.GetTopics(minfreq));
 			}
 			return StatusCode(StatusCodes.Status404NotFound);

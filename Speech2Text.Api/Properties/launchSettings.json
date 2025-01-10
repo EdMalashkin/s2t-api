@@ -13,7 +13,7 @@
     "https": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "youtubesubtitles/zgisi6OfZsc",
+      "launchUrl": "youtubesubtitles/zgisi6OfZsc/stats",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
