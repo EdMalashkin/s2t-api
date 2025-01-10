@@ -53,8 +53,11 @@ namespace Speech2Text.Core.Models
 
 		private List<int> GetOrderIndexes(string keyword, string text, string cleaned, string lemmatized)
 		{
+			// find the word among lemmatized
 			List<int> lemmatizedIndexes = FindIndexes(lemmatized.Split(separators), keyword);
+			// find the corresponding word among cleaned, by index
 			List<string> cleanedWords = FindWords(cleaned.Split(separators), lemmatizedIndexes);
+			// find the corresponding word in the text, assuming it is not changed during cleaning
 			List<int> textIndexes = FindIndexes(text.Split(separators), cleanedWords);
 			return textIndexes;
 		}
