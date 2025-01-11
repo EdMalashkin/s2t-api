@@ -1,0 +1,173 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 8,
+    "passes": 7,
+    "pending": 0,
+    "failures": 1,
+    "start": "2024-05-09T14:36:28.331Z",
+    "end": "2024-05-09T14:36:33.600Z",
+    "duration": 5269
+  },
+  "tests": [
+    {
+      "title": "should successfully create a transcript",
+      "fullTitle": "Restful Speech2Test API Tests should successfully create a transcript",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 559,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "should fetch the transcript of the provided transcript id",
+      "fullTitle": "Restful Speech2Test API Tests should fetch the transcript of the provided transcript id",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 2015,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves. (C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js)\n    at listOnTimeout (node:internal/timers:573:17)\n    at process.processTimers (node:internal/timers:514:7)",
+        "message": "Timeout of 2000ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves. (C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js)",
+        "code": "ERR_MOCHA_TIMEOUT",
+        "timeout": 2000,
+        "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js"
+      }
+    },
+    {
+      "title": "should update the transcript of the provided transcript id",
+      "fullTitle": "Restful Speech2Test API Tests should update the transcript of the provided transcript id",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 498,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "should fetch the transcript of the updated transcript id",
+      "fullTitle": "Restful Speech2Test API Tests should fetch the transcript of the updated transcript id",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 360,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "should delete the transcript of the updated transcript id",
+      "fullTitle": "Restful Speech2Test API Tests should delete the transcript of the updated transcript id",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 343,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "should fetch the transcript of the deleted transcript id",
+      "fullTitle": "Restful Speech2Test API Tests should fetch the transcript of the deleted transcript id",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 463,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "should clean old test original transcripts",
+      "fullTitle": "Restful Speech2Test API Tests should clean old test original transcripts",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 614,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "should clean old test edited transcripts",
+      "fullTitle": "Restful Speech2Test API Tests should clean old test edited transcripts",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 409,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "should fetch the transcript of the provided transcript id",
+      "fullTitle": "Restful Speech2Test API Tests should fetch the transcript of the provided transcript id",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 2015,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves. (C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js)\n    at listOnTimeout (node:internal/timers:573:17)\n    at process.processTimers (node:internal/timers:514:7)",
+        "message": "Timeout of 2000ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves. (C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js)",
+        "code": "ERR_MOCHA_TIMEOUT",
+        "timeout": 2000,
+        "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js"
+      }
+    }
+  ],
+  "passes": [
+    {
+      "title": "should successfully create a transcript",
+      "fullTitle": "Restful Speech2Test API Tests should successfully create a transcript",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 559,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "should update the transcript of the provided transcript id",
+      "fullTitle": "Restful Speech2Test API Tests should update the transcript of the provided transcript id",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 498,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "should fetch the transcript of the updated transcript id",
+      "fullTitle": "Restful Speech2Test API Tests should fetch the transcript of the updated transcript id",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 360,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "should delete the transcript of the updated transcript id",
+      "fullTitle": "Restful Speech2Test API Tests should delete the transcript of the updated transcript id",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 343,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "should fetch the transcript of the deleted transcript id",
+      "fullTitle": "Restful Speech2Test API Tests should fetch the transcript of the deleted transcript id",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 463,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "should clean old test original transcripts",
+      "fullTitle": "Restful Speech2Test API Tests should clean old test original transcripts",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 614,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "should clean old test edited transcripts",
+      "fullTitle": "Restful Speech2Test API Tests should clean old test edited transcripts",
+      "file": "C:\\Projects\\s2t\\s2t-api\\Speech2Text.Api.Test\\test.js",
+      "duration": 409,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    }
+  ]
+}
