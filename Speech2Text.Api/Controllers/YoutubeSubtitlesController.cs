@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Speech2Text.Core.Models;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Speech2Text.Api.Controllers
 {
@@ -54,7 +51,10 @@ namespace Speech2Text.Api.Controllers
 				{
 					return StatusCode(StatusCodes.Status404NotFound, new { message = "Transcript not found." });
 				}
-
+				else if (transcript.Error != null)
+				{
+					return StatusCode(StatusCodes.Status404NotFound, new { message = transcript.Error });
+				}
 				var s = new TokenStats(transcript);
 				return StatusCode(StatusCodes.Status200OK, s.GetTopics(minfreq));
 			}
