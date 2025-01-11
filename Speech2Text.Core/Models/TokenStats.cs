@@ -17,12 +17,11 @@ namespace Speech2Text.Core.Models
 			{
 				var result = transcript.Data
 					.SelectMany(x => x["tokens"]
-						.Select(token => new { Word = (string)token["lemma"], Theme = (string)token["theme"] }))
+						.Select(token => new { Word = (string)token["lemma"], Theme = (bool)token["theme"] }))
 					.GroupBy(x => new {x.Word, x.Theme })
 					.Select(g => new { Word = g.Key.Word.ToUpper(), g.Key.Theme, Freq = g.Count(), Links = GetLinks(g.Key.Word) })
 					.Where(x => x.Freq >= minfreq)
-					.OrderByDescending(g => g.Freq)
-					.ThenBy(g => g.Word)
+					.OrderByDescending(g => g.Freq).ThenBy(g => g.Word)
 					.ToList();
 				return new { Url = transcript.OriginalURL, Stats = result };
 			}
