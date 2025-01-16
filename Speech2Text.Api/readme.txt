@@ -1,0 +1,1 @@
+Transcripts controller is a facade for other controllers
